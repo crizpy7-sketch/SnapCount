@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+<title>SNAPCOUNT · AI Fantasy Football Co-Pilot</title>
+<meta name="theme-color" content="#0d1117" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="SNAPCOUNT" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230d1117'/%3E%3Ctext x='90' y='118' font-family='Arial Black,Arial' font-size='96' font-weight='900' fill='%23f5a623' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22SNAPCOUNT%22%2C%22short_name%22%3A%22SNAPCOUNT%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230d1117%22%2C%22theme_color%22%3A%22%230d1117%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520180%2520180%2527%253E%253Crect%2520width%253D%2527180%2527%2520height%253D%2527180%2527%2520rx%253D%252740%2527%2520fill%253D%2527%25230d1117%2527%252F%253E%253Ctext%2520x%253D%252790%2527%2520y%253D%2527118%2527%2520font-family%253D%2527Arial%2520Black%2527%2520font-size%253D%252796%2527%2520font-weight%253D%2527900%2527%2520fill%253D%2527%2523f5a623%2527%2520text-anchor%253D%2527middle%2527%253ES%253C%252Ftext%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22180x180%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Archivo', 'system-ui', 'sans-serif'],
+          sans: ['Figtree', 'system-ui', 'sans-serif'],
+        },
+        fontWeight: { '800': '800', '900': '900' },
+        colors: {
+          ink: '#0d1117',
+          panel: '#161b22',
+          panel2: '#1c2230',
+          line: '#262d3a',
+          edge: '#f5a623',
+          edgeDim: '#b9791a',
+          fg: '#e6edf3',
+          mut: '#8b95a3',
+          good: '#3fb950',
+          bad: '#f85149',
+        },
+        maxWidth: { app: '520px' },
+      },
+    },
+  };
+</script>
+<style>
+  html, body { background: #0d1117; }
+  body { font-family: 'Figtree', system-ui, sans-serif; color: #e6edf3; -webkit-font-smoothing: antialiased; }
+  * { -webkit-tap-highlight-color: transparent; }
+  .font-display { font-family: 'Archivo', system-ui, sans-serif; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .noscroll::-webkit-scrollbar { display: none; }
+  .noscroll { -ms-overflow-style: none; scrollbar-width: none; }
+  input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid #f5a623; outline-offset: 2px; }
+  input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5L6 8l3-3.5' stroke='%238b95a3' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+  .yardlines { background-image: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(230,237,243,0.035) 40px, rgba(230,237,243,0.035) 41px); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .fadeup { animation: fadeUp .28s ease both; }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .shimmer { background: linear-gradient(90deg, #1c2230 25%, #232b3a 37%, #1c2230 63%); background-size: 200% 100%; animation: shimmer 1.4s infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin { animation: spin .8s linear infinite; }
+  @media (prefers-reduced-motion: reduce) { .fadeup, .shimmer, .spin { animation: none; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js" crossorigin></script>
+
+<script type="text/babel">
+const { useState, useEffect, useCallback, useRef } = React;
+
+/* =========================================================================
+   CONFIG  (rename brand, set prices, paste your Stripe links here)
+   ========================================================================= */
+const BRAND = "SNAPCOUNT";
+const SEASON = "2026";
+const DEFAULT_WEEK = 1;
+
+// In this preview the AI runs through Claude's built-in artifact API.
+// For your DEPLOYED app, route this through your own Supabase Edge Function
+// proxy (your ANTHROPIC_API_KEY as a secret) so paying users trigger it, not
+// the open internet. See the notes I sent with this file. Swap AI_ENDPOINT.
+const AI_ENDPOINT = "https://api.anthropic.com/v1/messages";
+const MODEL = "claude-sonnet-4-6";
+
+const PRICING = {
+  monthly: { key: "monthly", label: "Pro Monthly", price: "$8.99", per: "/mo", note: "", link: "" },  // <- paste Stripe subscription link
+  annual:  { key: "annual",  label: "Pro Annual",  price: "$59.99", per: "/yr", note: "Save 44%", link: "" }, // <- paste Stripe subscription link
+};
+
+const PRO_KEY = "snapcount_pro_v1";
+const ROSTER_KEY = "snapcount_roster_v1";
+const POSITIONS = ["QB", "RB", "WR", "TE", "K", "DEF"];
+
+/* =========================================================================
+   HELPERS
+   ========================================================================= */
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms)),
+  ]);
+}
+
+async function askAI(system, user) {
+  // Combine into a single user turn for max compatibility with the proxy.
+  const res = await fetch(AI_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 1000,
+      messages: [{ role: "user", content: system + "\n\n" + user }],
+    }),
+  });
+  if (!res.ok) throw new Error("AI request failed (" + res.status + ")");
+  const data = await res.json();
+  return (data.content || [])
+    .filter((b) => b.type === "text")
+    .map((b) => b.text)
+    .join("\n")
+    .trim();
+}
+
+function extractJSON(text) {
+  let t = String(text).replace(/```json/gi, "").replace(/```/g, "").trim();
+  const s = t.indexOf("{");
+  const e = t.lastIndexOf("}");
+  if (s >= 0 && e > s) t = t.slice(s, e + 1);
+  return JSON.parse(t);
+}
+
+let PLAYERS_CACHE = null;
+async function loadPlayersMap() {
+  if (PLAYERS_CACHE) return PLAYERS_CACHE;
+  const res = await withTimeout(fetch("https://api.sleeper.app/v1/players/nfl"), 12000);
+  const map = await res.json();
+  PLAYERS_CACHE = map;
+  return map;
+}
+
+const SAMPLE_TRENDING = [
+  { id: null, name: "Jaylen Wright", pos: "RB", team: "MIA", count: 42180 },
+  { id: null, name: "Ja'Lynn Polk", pos: "WR", team: "NE", count: 31240 },
+  { id: null, name: "Ben Sinnott", pos: "TE", team: "WAS", count: 24990 },
+  { id: null, name: "Tyjae Spears", pos: "RB", team: "TEN", count: 22110 },
+  { id: null, name: "Jalen McMillan", pos: "WR", team: "TB", count: 18760 },
+  { id: null, name: "Michael Penix Jr.", pos: "QB", team: "ATL", count: 16540 },
+  { id: null, name: "Roschon Johnson", pos: "RB", team: "CHI", count: 14320 },
+  { id: null, name: "Cade Otton", pos: "TE", team: "TB", count: 12080 },
+];
+
+async function fetchTrending() {
+  // Try live Sleeper adds, resolve names via the player map. Fall back to sample.
+  const addsRes = await withTimeout(
+    fetch("https://api.sleeper.app/v1/players/nfl/trending/add?lookback_hours=72&limit=15"),
+    9000
+  );
+  const adds = await addsRes.json(); // [{player_id, count}]
+  if (!Array.isArray(adds) || adds.length === 0) throw new Error("no adds");
+  const map = await loadPlayersMap();
+  const rows = adds
+    .map((a) => {
+      const p = map[a.player_id];
+      if (!p) return null;
+      const name = p.full_name || ((p.first_name || "") + " " + (p.last_name || "")).trim() || p.player_id;
+      return { id: a.player_id, name, pos: p.position || "?", team: p.team || "FA", count: a.count || 0 };
+    })
+    .filter(Boolean);
+  if (rows.length === 0) throw new Error("no resolved");
+  return rows;
+}
+
+function headshot(id) {
+  return id ? "https://sleepercdn.com/content/nfl/players/" + id + ".jpg" : null;
+}
+
+/* =========================================================================
+   ICONS
+   ========================================================================= */
+const I = {
+  home: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M3 10.5 12 4l9 6.5M5 9.5V20h14V9.5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  scale: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 4v16M7 20h10M6 7l-3 6a3 3 0 0 0 6 0L6 7Zm12 0-3 6a3 3 0 0 0 6 0l-3-6ZM5 7h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  swap: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M4 8h13l-3-3M20 16H7l3 3" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  trend: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M4 15l5-5 4 4 7-8M16 6h5v5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  user: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 20c1.2-3.3 4-5 7-5s5.8 1.7 7 5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  lock: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.9"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"/></svg>),
+  bolt: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/></svg>),
+  check: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="m5 12 4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+  plus: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>),
+  x: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>),
+  arrow: (p) => (<svg viewBox="0 0 24 24" fill="none" {...p}><path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+};
+
+/* =========================================================================
+   SMALL UI PIECES
+   ========================================================================= */
+function PosChip({ pos }) {
+  return (
+    <span className="font-display text-[10px] font-800 tracking-wide px-1.5 py-0.5 rounded bg-ink border border-line text-mut">
+      {pos}
+    </span>
+  );
+}
+
+function Spinner({ className = "w-5 h-5" }) {
+  return (
+    <svg className={"spin " + className} viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9" stroke="#262d3a" strokeWidth="3" />
+      <path d="M21 12a9 9 0 0 0-9-9" stroke="#f5a623" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ConfBar({ value }) {
+  const v = Math.max(0, Math.min(100, Number(value) || 0));
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex-1 h-1.5 rounded-full bg-ink overflow-hidden">
+        <div className="h-full rounded-full bg-edge" style={{ width: v + "%" }} />
+      </div>
+      <span className="tnum text-[11px] text-mut font-semibold w-8 text-right">{v}%</span>
+    </div>
+  );
+}
+
+function VerdictPill({ v }) {
+  const s = String(v || "").toUpperCase();
+  const map = {
+    START: "bg-good/15 text-good border-good/30",
+    SIT: "bg-bad/12 text-bad border-bad/30",
+    FLEX: "bg-edge/12 text-edge border-edge/30",
+    ACCEPT: "bg-good/15 text-good border-good/30",
+    DECLINE: "bg-bad/12 text-bad border-bad/30",
+    COUNTER: "bg-edge/12 text-edge border-edge/30",
+  };
+  return (
+    <span className={"font-display text-[11px] font-800 tracking-wide px-2 py-0.5 rounded-full border " + (map[s] || "bg-panel2 text-mut border-line")}>
+      {s}
+    </span>
+  );
+}
+
+function GradeBadge({ grade }) {
+  const g = String(grade || "").charAt(0).toUpperCase();
+  const color =
+    g === "A" ? "text-good border-good/40" :
+    g === "B" ? "text-good border-good/30" :
+    g === "C" ? "text-edge border-edge/40" :
+    g === "D" ? "text-[#f0883e] border-[#f0883e]/40" :
+    "text-bad border-bad/40";
+  return (
+    <div className={"font-display font-900 text-3xl leading-none w-16 h-16 rounded-xl border-2 grid place-items-center bg-ink " + color}>
+      {grade || "?"}
+    </div>
+  );
+}
+
+function Toast({ msg, onDone }) {
+  useEffect(() => {
+    const t = setTimeout(onDone, 3200);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div className="fixed left-1/2 -translate-x-1/2 bottom-24 z-50 max-w-[92%] fadeup">
+      <div className="bg-panel2 border border-line text-fg text-sm rounded-xl px-4 py-3 shadow-2xl">{msg}</div>
+    </div>
+  );
+}
+
+/* Reusable roster / player list editor */
+function PlayerListEditor({ players, setPlayers, showOpp = false, namePlaceholder = "Player name", accent = "edge" }) {
+  const [name, setName] = useState("");
+  const [pos, setPos] = useState("RB");
+  const [opp, setOpp] = useState("");
+
+  function add() {
+    const n = name.trim();
+    if (!n) return;
+    setPlayers([...players, { name: n, pos, opp: opp.trim() }]);
+    setName(""); setOpp("");
+  }
+  function remove(i) {
+    setPlayers(players.filter((_, idx) => idx !== i));
+  }
+
+  return (
+    <div>
+      <div className="flex gap-2">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") add(); }}
+          placeholder={namePlaceholder}
+          className="flex-1 min-w-0 bg-ink border border-line rounded-lg px-3 py-2.5 text-sm placeholder-mut/70"
+        />
+        <select value={pos} onChange={(e) => setPos(e.target.value)} className="bg-ink border border-line rounded-lg px-2 py-2.5 text-sm font-semibold">
+          {POSITIONS.map((p) => <option key={p} value={p}>{p}</option>)}
+        </select>
+      </div>
+      {showOpp && (
+        <input
+          value={opp}
+          onChange={(e) => setOpp(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") add(); }}
+          placeholder="Opponent (optional), e.g. at DAL"
+          className="mt-2 w-full bg-ink border border-line rounded-lg px-3 py-2.5 text-sm placeholder-mut/70"
+        />
+      )}
+      <button onClick={add} className={"mt-2 w-full flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-sm font-semibold border border-" + accent + "/40 text-" + accent + " bg-" + accent + "/10 active:scale-[.99] transition"}>
+        <I.plus className="w-4 h-4" /> Add player
+      </button>
+
+      {players.length > 0 && (
+        <div className="mt-3 space-y-1.5">
+          {players.map((p, i) => (
+            <div key={i} className="flex items-center gap-2.5 bg-ink border border-line rounded-lg px-3 py-2">
+              <PosChip pos={p.pos} />
+              <span className="text-sm font-medium flex-1 truncate">{p.name}</span>
+              {p.opp ? <span className="text-[11px] text-mut truncate max-w-[90px]">{p.opp}</span> : null}
+              <button onClick={() => remove(i)} aria-label={"Remove " + p.name} className="text-mut hover:text-bad p-1">
+                <I.x className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Card({ children, className = "" }) {
+  return <div className={"bg-panel border border-line rounded-xl " + className}>{children}</div>;
+}
+
+function AIError({ msg, onRetry }) {
+  return (
+    <Card className="p-4 border-bad/30">
+      <p className="text-sm text-fg font-semibold">Could not reach the analyst.</p>
+      <p className="text-sm text-mut mt-1">{msg || "The AI request did not go through."} Check your connection and try again.</p>
+      {onRetry && <button onClick={onRetry} className="mt-3 text-sm font-semibold text-edge">Try again</button>}
+    </Card>
+  );
+}
+
+function Disclaimer() {
+  return <p className="text-[11px] leading-relaxed text-mut/70 mt-3">AI-generated guidance. Confirm injury and inactive news before lineups lock. You make the final call.</p>;
+}
+
+/* Paywall gate wrapping premium tools */
+function LockGate({ title, blurb, bullets, onSee }) {
+  return (
+    <Card className="p-6 text-center fadeup">
+      <div className="w-12 h-12 rounded-xl bg-edge/12 border border-edge/30 grid place-items-center mx-auto text-edge">
+        <I.lock className="w-6 h-6" />
+      </div>
+      <h3 className="font-display font-800 text-xl mt-4">{title}</h3>
+      <p className="text-sm text-mut mt-1.5 max-w-[34ch] mx-auto">{blurb}</p>
+      <div className="mt-5 space-y-2.5 text-left max-w-[30ch] mx-auto">
+        {bullets.map((b, i) => (
+          <div key={i} className="flex items-start gap-2.5">
+            <I.check className="w-4 h-4 text-good mt-0.5 shrink-0" />
+            <span className="text-sm text-fg">{b}</span>
+          </div>
+        ))}
+      </div>
+      <button onClick={onSee} className="mt-6 w-full bg-edge text-ink font-display font-800 rounded-lg py-3 active:scale-[.99] transition">
+        See plans
+      </button>
+    </Card>
+  );
+}
+
+/* =========================================================================
+   APP
+   ========================================================================= */
+function App() {
+  const [tab, setTab] = useState("home");
+  const [isPro, setIsPro] = useState(false);
+  const [roster, setRoster] = useState([]);
+  const [toast, setToast] = useState(null);
+
+  // trending (shared by home + waivers)
+  const [trending, setTrending] = useState(null);
+  const [trendLive, setTrendLive] = useState(true);
+  const [trendLoading, setTrendLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      setIsPro(localStorage.getItem(PRO_KEY) === "1");
+      const r = JSON.parse(localStorage.getItem(ROSTER_KEY) || "[]");
+      if (Array.isArray(r)) setRoster(r);
+    } catch (e) {}
+  }, []);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const rows = await fetchTrending();
+        if (alive) { setTrending(rows); setTrendLive(true); }
+      } catch (e) {
+        if (alive) { setTrending(SAMPLE_TRENDING); setTrendLive(false); }
+      } finally {
+        if (alive) setTrendLoading(false);
+      }
+    })();
+    return () => { alive = false; };
+  }, []);
+
+  function saveRoster(r) {
+    setRoster(r);
+    try { localStorage.setItem(ROSTER_KEY, JSON.stringify(r)); } catch (e) {}
+  }
+  function setPro(v) {
+    setIsPro(v);
+    try { localStorage.setItem(PRO_KEY, v ? "1" : "0"); } catch (e) {}
+  }
+  function go(t) { setTab(t); window.scrollTo({ top: 0 }); }
+
+  const tabs = [
+    { id: "home", label: "Home", icon: I.home },
+    { id: "startsit", label: "Start/Sit", icon: I.scale },
+    { id: "trades", label: "Trades", icon: I.swap },
+    { id: "waivers", label: "Waivers", icon: I.trend },
+    { id: "team", label: "Team", icon: I.user },
+  ];
+
+  return (
+    <div className="min-h-[100dvh] bg-ink">
+      <div className="mx-auto max-w-app min-h-[100dvh] flex flex-col">
+        {/* Header */}
+        <header className="sticky top-0 z-30 bg-ink/90 backdrop-blur border-b border-line">
+          <div className="px-4 h-14 flex items-center justify-between" style={{ paddingTop: "env(safe-area-inset-top)" }}>
+            <button onClick={() => go("home")} className="font-display font-900 text-xl tracking-tight">
+              <span className="text-fg">SNAP</span><span className="text-edge">COUNT</span>
+            </button>
+            <button
+              onClick={() => go("upgrade")}
+              className={
+                "flex items-center gap-1.5 text-[11px] font-display font-800 tracking-wide rounded-full px-2.5 py-1 border " +
+                (isPro ? "bg-good/12 text-good border-good/30" : "bg-edge/10 text-edge border-edge/30")
+              }
+            >
+              {isPro ? <I.check className="w-3.5 h-3.5" /> : <I.bolt className="w-3.5 h-3.5" />}
+              {isPro ? "PRO" : "GO PRO"}
+            </button>
+          </div>
+        </header>
+
+        {/* Content */}
+        <main className="flex-1 px-4 pt-4 pb-28">
+          {tab === "home" && <Home {...{ go, isPro, trending, trendLive, trendLoading }} />}
+          {tab === "startsit" && <StartSit {...{ isPro, go }} />}
+          {tab === "trades" && <Trades {...{ isPro, go }} />}
+          {tab === "waivers" && <Waivers {...{ isPro, go, roster, trending, trendLive, trendLoading }} />}
+          {tab === "team" && <Team {...{ roster, saveRoster }} />}
+          {tab === "upgrade" && <Upgrade {...{ isPro, setPro, setToast, go }} />}
+        </main>
+
+        {/* Bottom tab bar */}
+        <nav className="fixed bottom-0 inset-x-0 z-30 bg-panel/95 backdrop-blur border-t border-line">
+          <div className="mx-auto max-w-app grid grid-cols-5" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+            {tabs.map((t) => {
+              const active = tab === t.id;
+              const Icon = t.icon;
+              return (
+                <button key={t.id} onClick={() => go(t.id)} className="py-2.5 flex flex-col items-center gap-1">
+                  <Icon className={"w-6 h-6 " + (active ? "text-edge" : "text-mut")} />
+                  <span className={"text-[10px] font-semibold " + (active ? "text-edge" : "text-mut")}>{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      </div>
+
+      {toast && <Toast msg={toast} onDone={() => setToast(null)} />}
+    </div>
+  );
+}
+
+/* ---------------- HOME ---------------- */
+function Home({ go, isPro, trending, trendLive, trendLoading }) {
+  const top = (trending || []).slice(0, 6);
+  return (
+    <div className="fadeup">
+      {/* Hero band */}
+      <section className="yardlines -mx-4 px-4 pt-2 pb-6 border-b border-line">
+        <p className="font-display text-[11px] font-800 tracking-[0.18em] text-edge">{SEASON} SEASON</p>
+        <h1 className="font-display font-900 text-[34px] leading-[0.98] tracking-tight mt-2">
+          Your unfair edge<br />every Sunday.
+        </h1>
+        <p className="text-mut text-[15px] mt-3 max-w-[36ch]">
+          AI start/sit calls, trade grades, and waiver targets in seconds. Built for people who play to win.
+        </p>
+        {!isPro && (
+          <button onClick={() => go("upgrade")} className="mt-5 inline-flex items-center gap-2 bg-edge text-ink font-display font-800 rounded-lg px-5 py-3 active:scale-[.99] transition">
+            Unlock Pro <I.arrow className="w-4 h-4" />
+          </button>
+        )}
+      </section>
+
+      {/* Trending adds */}
+      <section className="mt-6">
+        <div className="flex items-center justify-between">
+          <h2 className="font-display font-800 text-lg flex items-center gap-2">
+            Trending adds
+            <span className={"text-[10px] font-800 tracking-wide px-1.5 py-0.5 rounded border " + (trendLive ? "text-good border-good/30 bg-good/10" : "text-mut border-line bg-panel")}>
+              {trendLoading ? "LOADING" : trendLive ? "LIVE" : "SAMPLE"}
+            </span>
+          </h2>
+          <button onClick={() => go("waivers")} className="text-sm font-semibold text-edge">All</button>
+        </div>
+
+        {trendLoading ? (
+          <div className="mt-3 flex gap-3 overflow-hidden">
+            {[0, 1, 2, 3].map((i) => <div key={i} className="shimmer h-[132px] w-[124px] rounded-xl shrink-0" />)}
+          </div>
+        ) : (
+          <div className="mt-3 flex gap-3 overflow-x-auto noscroll -mx-4 px-4">
+            {top.map((p, i) => (
+              <div key={i} className="shrink-0 w-[124px] bg-panel border border-line rounded-xl p-3">
+                <Avatar id={p.id} pos={p.pos} size="w-12 h-12" />
+                <p className="text-sm font-semibold mt-2 leading-tight truncate">{p.name}</p>
+                <p className="text-[11px] text-mut mt-0.5">{p.pos} · {p.team}</p>
+                <p className="tnum text-[11px] text-good font-semibold mt-1.5">+{Number(p.count).toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Premium tools (asymmetric) */}
+      <section className="mt-7">
+        <h2 className="font-display font-800 text-lg">Pro tools</h2>
+        <button onClick={() => go("startsit")} className="mt-3 w-full text-left relative overflow-hidden rounded-xl border border-line bg-gradient-to-br from-panel2 to-panel p-5 active:scale-[.995] transition">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="text-edge"><I.scale className="w-7 h-7" /></div>
+              <h3 className="font-display font-800 text-xl mt-3">Start/Sit Optimizer</h3>
+              <p className="text-sm text-mut mt-1 max-w-[30ch]">Torn between two players? Get a ranked call with the reasoning behind it.</p>
+            </div>
+            {!isPro && <LockTag />}
+          </div>
+        </button>
+
+        <div className="grid grid-cols-2 gap-3 mt-3">
+          <button onClick={() => go("trades")} className="text-left rounded-xl border border-line bg-panel p-4 active:scale-[.99] transition">
+            <div className="flex items-center justify-between">
+              <div className="text-edge"><I.swap className="w-6 h-6" /></div>
+              {!isPro && <LockTag mini />}
+            </div>
+            <h3 className="font-display font-800 text-base mt-3">Trade Analyzer</h3>
+            <p className="text-[12px] text-mut mt-1">Instant grade and verdict.</p>
+          </button>
+          <button onClick={() => go("waivers")} className="text-left rounded-xl border border-line bg-panel p-4 active:scale-[.99] transition">
+            <div className="flex items-center justify-between">
+              <div className="text-edge"><I.trend className="w-6 h-6" /></div>
+              {!isPro && <LockTag mini />}
+            </div>
+            <h3 className="font-display font-800 text-base mt-3">Waiver Report</h3>
+            <p className="text-[12px] text-mut mt-1">Targets for your roster.</p>
+          </button>
+        </div>
+      </section>
+
+      <p className="text-[11px] leading-relaxed text-mut/70 mt-8 text-center">
+        Not affiliated with the NFL or any fantasy platform. Guidance is for entertainment.
+      </p>
+    </div>
+  );
+}
+
+function LockTag({ mini }) {
+  return (
+    <span className={"flex items-center gap-1 rounded-full border border-edge/30 bg-edge/10 text-edge font-800 " + (mini ? "text-[9px] px-1.5 py-0.5" : "text-[10px] px-2 py-1")}>
+      <I.lock className={mini ? "w-3 h-3" : "w-3.5 h-3.5"} /> PRO
+    </span>
+  );
+}
+
+function Avatar({ id, pos, size = "w-11 h-11" }) {
+  const [ok, setOk] = useState(!!id);
+  const src = headshot(id);
+  if (ok && src) {
+    return <img src={src} alt="" onError={() => setOk(false)} className={size + " rounded-lg object-cover bg-ink border border-line"} />;
+  }
+  return (
+    <div className={size + " rounded-lg bg-ink border border-line grid place-items-center"}>
+      <span className="font-display font-800 text-xs text-mut">{pos}</span>
+    </div>
+  );
+}
+
+/* ---------------- START / SIT ---------------- */
+function StartSit({ isPro, go }) {
+  const [players, setPlayers] = useState([]);
+  const [format, setFormat] = useState("PPR");
+  const [week, setWeek] = useState(DEFAULT_WEEK);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [raw, setRaw] = useState("");
+  const [err, setErr] = useState("");
+
+  async function run() {
+    setErr(""); setRaw(""); setResult(null); setLoading(true);
+    const system = "You are an elite fantasy football analyst who gives fast, decisive start and sit calls. Weigh matchup, target and carry share, recent form, injuries, weather, and the scoring format. Respond with ONLY valid JSON, no markdown and no preamble. Shape: {\"summary\":\"one or two sentence overall read\",\"ranking\":[{\"player\":\"name\",\"pos\":\"RB\",\"verdict\":\"START|SIT|FLEX\",\"confidence\":0-100,\"reason\":\"one sentence\"}]}. Order from most confident start down to sit.";
+    const user = "Scoring: " + format + ". Week " + week + ", " + SEASON + " season. Players I am deciding between:\n" +
+      players.map((p) => "- " + p.name + " (" + p.pos + ")" + (p.opp ? " " + p.opp : "")).join("\n") +
+      "\nGive the ranked start order.";
+    try {
+      const text = await askAI(system, user);
+      try { setResult(extractJSON(text)); } catch (e) { setRaw(text); }
+    } catch (e) {
+      setErr(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!isPro) {
+    return (
+      <LockGate
+        title="Start/Sit Optimizer"
+        blurb="Stop second-guessing your flex. Get a ranked call in seconds."
+        bullets={["Ranked start order with confidence", "Plain-English reason for each call", "PPR, half PPR, and standard scoring"]}
+        onSee={() => go("upgrade")}
+      />
+    );
+  }
+
+  return (
+    <div className="fadeup">
+      <h1 className="font-display font-900 text-2xl">Start/Sit Optimizer</h1>
+      <p className="text-sm text-mut mt-1">Add the players you are choosing between.</p>
+
+      <Card className="p-4 mt-4">
+        <PlayerListEditor players={players} setPlayers={setPlayers} showOpp />
+        <div className="grid grid-cols-2 gap-2 mt-3">
+          <div>
+            <label className="text-[11px] text-mut font-semibold">Scoring</label>
+            <select value={format} onChange={(e) => setFormat(e.target.value)} className="mt-1 w-full bg-ink border border-line rounded-lg px-3 py-2.5 text-sm font-semibold">
+              {["PPR", "Half PPR", "Standard"].map((f) => <option key={f}>{f}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="text-[11px] text-mut font-semibold">Week</label>
+            <select value={week} onChange={(e) => setWeek(Number(e.target.value))} className="mt-1 w-full bg-ink border border-line rounded-lg px-3 py-2.5 text-sm font-semibold tnum">
+              {Array.from({ length: 18 }, (_, i) => i + 1).map((w) => <option key={w} value={w}>Week {w}</option>)}
+            </select>
+          </div>
+        </div>
+        <button
+          onClick={run}
+          disabled={players.length < 2 || loading}
+          className="mt-4 w-full bg-edge text-ink font-display font-800 rounded-lg py-3 disabled:opacity-40 flex items-center justify-center gap-2 active:scale-[.99] transition"
+        >
+          {loading ? <><Spinner className="w-5 h-5" /> Analyzing matchups</> : <>Get the call <I.arrow className="w-4 h-4" /></>}
+        </button>
+        {players.length < 2 && <p className="text-[11px] text-mut mt-2 text-center">Add at least two players to compare.</p>}
+      </Card>
+
+      {err && <div className="mt-4"><AIError msg={err} onRetry={run} /></div>}
+
+      {result && (
+        <div className="mt-4 space-y-3 fadeup">
+          {result.summary && <Card className="p-4"><p className="text-sm text-fg leading-relaxed">{result.summary}</p></Card>}
+          {(result.ranking || []).map((r, i) => (
+            <Card key={i} className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="font-display font-900 text-lg text-mut w-6 tnum">{i + 1}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <PosChip pos={r.pos} />
+                    <span className="font-semibold truncate">{r.player}</span>
+                  </div>
+                </div>
+                <VerdictPill v={r.verdict} />
+              </div>
+              <div className="mt-3"><ConfBar value={r.confidence} /></div>
+              <p className="text-sm text-mut mt-2 leading-relaxed">{r.reason}</p>
+            </Card>
+          ))}
+          <Disclaimer />
+        </div>
+      )}
+
+      {raw && <Card className="p-4 mt-4"><p className="text-sm text-fg whitespace-pre-wrap leading-relaxed">{raw}</p><Disclaimer /></Card>}
+    </div>
+  );
+}
+
+/* ---------------- TRADES ---------------- */
+function Trades({ isPro, go }) {
+  const [give, setGive] = useState([]);
+  const [get, setGet] = useState([]);
+  const [format, setFormat] = useState("PPR");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [raw, setRaw] = useState("");
+  const [err, setErr] = useState("");
+
+  async function run() {
+    setErr(""); setRaw(""); setResult(null); setLoading(true);
+    const system = "You are a sharp fantasy football trade analyst. Grade the trade decisively from the perspective of the manager giving the first list. Weigh rest-of-season value, positional need, scoring format, and player risk. Respond with ONLY valid JSON, no markdown. Shape: {\"grade\":\"A|A-|B+|B|B-|C+|C|C-|D|F\",\"verdict\":\"ACCEPT|DECLINE|COUNTER\",\"winner\":\"you|them|even\",\"summary\":\"two or three sentence explanation\",\"keys\":[\"short point\",\"short point\"]}.";
+    const user = "Scoring: " + format + ", " + SEASON + " season.\nYou GIVE: " +
+      give.map((p) => p.name + " (" + p.pos + ")").join(", ") + "\nYou GET: " +
+      get.map((p) => p.name + " (" + p.pos + ")").join(", ") + "\nGrade this trade for me.";
+    try {
+      const text = await askAI(system, user);
+      try { setResult(extractJSON(text)); } catch (e) { setRaw(text); }
+    } catch (e) { setErr(e.message); } finally { setLoading(false); }
+  }
+
+  if (!isPro) {
+    return (
+      <LockGate
+        title="Trade Analyzer"
+        blurb="Know if a trade helps you before you hit accept."
+        bullets={["Letter grade and clear verdict", "Who wins and why", "Counter-offer guidance when it is close"]}
+        onSee={() => go("upgrade")}
+      />
+    );
+  }
+
+  const winnerText = result && ({ you: "You come out ahead", them: "They come out ahead", even: "Roughly even value" }[result.winner] || "");
+
+  return (
+    <div className="fadeup">
+      <h1 className="font-display font-900 text-2xl">Trade Analyzer</h1>
+      <p className="text-sm text-mut mt-1">Add both sides of the deal.</p>
+
+      <Card className="p-4 mt-4">
+        <p className="font-display font-800 text-sm text-bad mb-2">You give</p>
+        <PlayerListEditor players={give} setPlayers={setGive} accent="bad" namePlaceholder="Player you send" />
+      </Card>
+      <div className="flex justify-center my-2 text-mut"><I.swap className="w-6 h-6" /></div>
+      <Card className="p-4">
+        <p className="font-display font-800 text-sm text-good mb-2">You get</p>
+        <PlayerListEditor players={get} setPlayers={setGet} accent="good" namePlaceholder="Player you receive" />
+      </Card>
+
+      <Card className="p-4 mt-3">
+        <label className="text-[11px] text-mut font-semibold">Scoring</label>
+        <select value={format} onChange={(e) => setFormat(e.target.value)} className="mt-1 w-full bg-ink border border-line rounded-lg px-3 py-2.5 text-sm font-semibold">
+          {["PPR", "Half PPR", "Standard"].map((f) => <option key={f}>{f}</option>)}
+        </select>
+        <button
+          onClick={run}
+          disabled={give.length < 1 || get.length < 1 || loading}
+          className="mt-4 w-full bg-edge text-ink font-display font-800 rounded-lg py-3 disabled:opacity-40 flex items-center justify-center gap-2 active:scale-[.99] transition"
+        >
+          {loading ? <><Spinner className="w-5 h-5" /> Grading the deal</> : <>Grade trade <I.arrow className="w-4 h-4" /></>}
+        </button>
+        {(give.length < 1 || get.length < 1) && <p className="text-[11px] text-mut mt-2 text-center">Add at least one player to each side.</p>}
+      </Card>
+
+      {err && <div className="mt-4"><AIError msg={err} onRetry={run} /></div>}
+
+      {result && (
+        <div className="mt-4 fadeup">
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <GradeBadge grade={result.grade} />
+              <div className="flex-1">
+                <VerdictPill v={result.verdict} />
+                <p className="text-sm font-semibold mt-2">{winnerText}</p>
+              </div>
+            </div>
+            <p className="text-sm text-mut mt-4 leading-relaxed">{result.summary}</p>
+            {Array.isArray(result.keys) && result.keys.length > 0 && (
+              <div className="mt-3 space-y-2 border-t border-line pt-3">
+                {result.keys.map((k, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-edge mt-1">•</span>
+                    <span className="text-sm text-fg">{k}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <Disclaimer />
+          </Card>
+        </div>
+      )}
+
+      {raw && <Card className="p-4 mt-4"><p className="text-sm text-fg whitespace-pre-wrap leading-relaxed">{raw}</p><Disclaimer /></Card>}
+    </div>
+  );
+}
+
+/* ---------------- WAIVERS ---------------- */
+function Waivers({ isPro, go, roster, trending, trendLive, trendLoading }) {
+  const rows = trending || [];
+  const [format, setFormat] = useState("PPR");
+  const [loading, setLoading] = useState(false);
+  const [report, setReport] = useState(null);
+  const [raw, setRaw] = useState("");
+  const [err, setErr] = useState("");
+
+  async function run() {
+    setErr(""); setRaw(""); setReport(null); setLoading(true);
+    const system = "You are a fantasy football waiver wire strategist. Given a manager's current roster and a list of widely added players, recommend the best pickups for this specific roster. Weigh positional need, upside, and schedule. Respond with ONLY valid JSON, no markdown. Shape: {\"summary\":\"one or two sentence read on this roster's needs\",\"pickups\":[{\"player\":\"name\",\"pos\":\"RB\",\"priority\":1-5,\"faab\":\"a percent like 12%\",\"reason\":\"one sentence\",\"drop\":\"who to drop or a bench type\"}]}. Priority 5 is highest. Recommend 3 to 5 pickups.";
+    const user = "Scoring: " + format + ".\nMy roster:\n" +
+      (roster.length ? roster.map((p) => "- " + p.name + " (" + p.pos + ")").join("\n") : "(empty, general best available)") +
+      "\nWidely added players available now:\n" +
+      rows.slice(0, 12).map((p) => "- " + p.name + " (" + p.pos + ", " + p.team + ")").join("\n") +
+      "\nWhat should I target and who do I drop?";
+    try {
+      const text = await askAI(system, user);
+      try { setReport(extractJSON(text)); } catch (e) { setRaw(text); }
+    } catch (e) { setErr(e.message); } finally { setLoading(false); }
+  }
+
+  return (
+    <div className="fadeup">
+      <h1 className="font-display font-900 text-2xl flex items-center gap-2">
+        Waiver Wire
+        <span className={"text-[10px] font-800 tracking-wide px-1.5 py-0.5 rounded border " + (trendLive ? "text-good border-good/30 bg-good/10" : "text-mut border-line bg-panel")}>
+          {trendLoading ? "LOADING" : trendLive ? "LIVE" : "SAMPLE"}
+        </span>
+      </h1>
+      <p className="text-sm text-mut mt-1">Most added players across leagues right now.</p>
+
+      {/* Free trending list */}
+      <div className="mt-4 space-y-2">
+        {trendLoading
+          ? [0, 1, 2, 3, 4].map((i) => <div key={i} className="shimmer h-[64px] rounded-xl" />)
+          : rows.map((p, i) => (
+              <Card key={i} className="p-3 flex items-center gap-3">
+                <span className="font-display font-900 text-mut w-5 text-center tnum">{i + 1}</span>
+                <Avatar id={p.id} pos={p.pos} />
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold truncate">{p.name}</p>
+                  <p className="text-[11px] text-mut">{p.pos} · {p.team}</p>
+                </div>
+                <div className="text-right">
+                  <p className="tnum text-sm text-good font-semibold">+{Number(p.count).toLocaleString()}</p>
+                  <p className="text-[10px] text-mut">adds</p>
+                </div>
+              </Card>
+            ))}
+      </div>
+
+      {/* Premium: AI waiver report */}
+      <div className="mt-6">
+        <h2 className="font-display font-800 text-lg flex items-center gap-2">AI Waiver Report {!isPro && <LockTag mini />}</h2>
+        {!isPro ? (
+          <div className="mt-3">
+            <LockGate
+              title="Personalized targets"
+              blurb="Turn the trending list into a plan built around your exact roster."
+              bullets={["Ranked pickups for your team", "FAAB bid suggestions", "Who to drop to make room"]}
+              onSee={() => go("upgrade")}
+            />
+          </div>
+        ) : (
+          <Card className="p-4 mt-3">
+            <p className="text-sm text-mut">Uses your saved roster from the Team tab plus the live trending list above.</p>
+            <div className="flex items-center gap-2 mt-3">
+              <select value={format} onChange={(e) => setFormat(e.target.value)} className="bg-ink border border-line rounded-lg px-3 py-2.5 text-sm font-semibold">
+                {["PPR", "Half PPR", "Standard"].map((f) => <option key={f}>{f}</option>)}
+              </select>
+              <button onClick={run} disabled={loading} className="flex-1 bg-edge text-ink font-display font-800 rounded-lg py-2.5 disabled:opacity-40 flex items-center justify-center gap-2 active:scale-[.99] transition">
+                {loading ? <><Spinner className="w-5 h-5" /> Building</> : <>Generate report</>}
+              </button>
+            </div>
+            {roster.length === 0 && <p className="text-[11px] text-edge mt-2">Tip: add your roster in the Team tab for sharper picks.</p>}
+          </Card>
+        )}
+      </div>
+
+      {err && <div className="mt-4"><AIError msg={err} onRetry={run} /></div>}
+
+      {report && (
+        <div className="mt-4 space-y-3 fadeup">
+          {report.summary && <Card className="p-4"><p className="text-sm text-fg leading-relaxed">{report.summary}</p></Card>}
+          {(report.pickups || []).sort((a, b) => (b.priority || 0) - (a.priority || 0)).map((p, i) => (
+            <Card key={i} className="p-4">
+              <div className="flex items-center gap-2">
+                <PosChip pos={p.pos} />
+                <span className="font-semibold flex-1 truncate">{p.player}</span>
+                <span className="tnum text-[11px] font-800 text-edge">{p.faab}</span>
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                {Array.from({ length: 5 }).map((_, k) => (
+                  <div key={k} className={"h-1.5 flex-1 rounded-full " + (k < (p.priority || 0) ? "bg-edge" : "bg-ink")} />
+                ))}
+              </div>
+              <p className="text-sm text-mut mt-2 leading-relaxed">{p.reason}</p>
+              {p.drop && <p className="text-[12px] text-mut mt-2"><span className="text-bad font-semibold">Drop:</span> {p.drop}</p>}
+            </Card>
+          ))}
+          <Disclaimer />
+        </div>
+      )}
+
+      {raw && <Card className="p-4 mt-4"><p className="text-sm text-fg whitespace-pre-wrap leading-relaxed">{raw}</p><Disclaimer /></Card>}
+    </div>
+  );
+}
+
+/* ---------------- TEAM ---------------- */
+function Team({ roster, saveRoster }) {
+  return (
+    <div className="fadeup">
+      <h1 className="font-display font-900 text-2xl">My Team</h1>
+      <p className="text-sm text-mut mt-1">Save your roster once. Every Pro tool uses it to tailor advice.</p>
+
+      <Card className="p-4 mt-4">
+        <PlayerListEditor players={roster} setPlayers={saveRoster} namePlaceholder="Add a rostered player" />
+      </Card>
+
+      {roster.length > 0 && (
+        <p className="text-[12px] text-mut mt-3 text-center">{roster.length} player{roster.length === 1 ? "" : "s"} saved on this device.</p>
+      )}
+    </div>
+  );
+}
+
+/* ---------------- UPGRADE ---------------- */
+function Upgrade({ isPro, setPro, setToast, go }) {
+  const [plan, setPlan] = useState("annual");
+
+  function subscribe() {
+    const p = PRICING[plan];
+    if (p.link) {
+      window.open(p.link, "_blank");
+    } else {
+      setToast("Add your Stripe subscription link in the CONFIG block to take real payments.");
+    }
+  }
+
+  if (isPro) {
+    return (
+      <div className="fadeup text-center pt-6">
+        <div className="w-14 h-14 rounded-2xl bg-good/12 border border-good/30 grid place-items-center mx-auto text-good"><I.check className="w-7 h-7" /></div>
+        <h1 className="font-display font-900 text-2xl mt-4">You are on Pro</h1>
+        <p className="text-sm text-mut mt-2 max-w-[32ch] mx-auto">Every tool is unlocked. Go win your matchup.</p>
+        <button onClick={() => go("startsit")} className="mt-6 bg-edge text-ink font-display font-800 rounded-lg px-6 py-3">Open Start/Sit</button>
+        <button onClick={() => setPro(false)} className="mt-4 block mx-auto text-[12px] text-mut underline">Reset to Free (testing)</button>
+      </div>
+    );
+  }
+
+  const feats = [
+    "Unlimited Start/Sit calls",
+    "Unlimited trade grades",
+    "Personalized waiver reports",
+    "FAAB bid and drop suggestions",
+    "PPR, half PPR, and standard",
+  ];
+
+  return (
+    <div className="fadeup">
+      <h1 className="font-display font-900 text-2xl">Go Pro</h1>
+      <p className="text-sm text-mut mt-1">One decision a week can flip a whole season.</p>
+
+      {/* Plan toggle */}
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        {["annual", "monthly"].map((k) => {
+          const p = PRICING[k];
+          const active = plan === k;
+          return (
+            <button key={k} onClick={() => setPlan(k)} className={"text-left rounded-xl border p-4 transition " + (active ? "border-edge bg-edge/10" : "border-line bg-panel")}>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold">{p.label}</span>
+                {p.note && <span className="text-[10px] font-800 text-edge bg-edge/15 rounded px-1.5 py-0.5">{p.note}</span>}
+              </div>
+              <div className="mt-2 flex items-baseline gap-1">
+                <span className="font-display font-900 text-2xl">{p.price}</span>
+                <span className="text-mut text-sm">{p.per}</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <button onClick={subscribe} className="mt-4 w-full bg-edge text-ink font-display font-800 rounded-lg py-3.5 flex items-center justify-center gap-2 active:scale-[.99] transition">
+        Start {PRICING[plan].label} <I.arrow className="w-4 h-4" />
+      </button>
+
+      <Card className="p-5 mt-5">
+        <p className="font-display font-800 text-sm">Everything in Pro</p>
+        <div className="mt-3 space-y-2.5">
+          {feats.map((f, i) => (
+            <div key={i} className="flex items-center gap-2.5">
+              <I.check className="w-4 h-4 text-good shrink-0" />
+              <span className="text-sm">{f}</span>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <p className="text-[11px] text-mut/80 mt-4 text-center leading-relaxed">
+        Cancel anytime. Guidance is for entertainment and is not affiliated with the NFL or any fantasy platform.
+      </p>
+
+      {/* Testing only. Remove before launch, or gate behind real Stripe + Supabase verification. */}
+      <button onClick={() => { setPro(true); go("home"); }} className="mt-5 w-full border border-line rounded-lg py-2.5 text-[12px] text-mut">
+        Demo unlock (testing only)
+      </button>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
