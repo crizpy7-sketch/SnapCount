@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#7FC9C1" />
+<title>Naeri Sweet Club — Membership</title>
+<meta name="description" content="Join the Naeri Sweet Club — first month free, then $9.99/month. Members save on every custom cake, get priority booking and a birthday treat." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#FBF6F1; --card:#FFFFFF;
+    --mint:#7FC9C1; --mint-deep:#4E9E96; --mint-soft:#E4F3F1;
+    --blush:#EFA9B9; --blush-deep:#DE7F95; --blush-soft:#FBE9ED;
+    --gold:#C79A4C; --gold-soft:#F3E7CC;
+    --ink:#3B332F; --ink-soft:#77685f; --line:#EADFD4; --danger:#C0553F;
+    --radius:18px; --shadow:0 10px 30px -12px rgba(83,60,45,.28); --shadow-sm:0 4px 14px -8px rgba(83,60,45,.35); --maxw:900px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);
+    background:radial-gradient(1200px 600px at 100% -10%, var(--mint-soft), transparent 55%),radial-gradient(900px 500px at -10% 10%, var(--blush-soft), transparent 50%),var(--cream);
+    line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;line-height:1.15;margin:0;}
+  p{margin:0;} a{color:inherit;}
+
+  header.site{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4) blur(10px);background:rgba(251,246,241,.82);border-bottom:1px solid var(--line);}
+  .bar{max-width:var(--maxw);margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px;}
+  .brand{display:flex;align-items:center;gap:10px;margin-right:auto;text-decoration:none;min-width:0;}
+  .brand .mark{width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--mint),var(--mint-deep));box-shadow:var(--shadow-sm);font-size:20px;}
+  .brand .name{font-family:'Great Vibes',cursive;font-size:29px;line-height:1;color:var(--mint-deep);white-space:nowrap;}
+  .brand .name small{display:block;font-family:'Poppins';font-size:9.5px;letter-spacing:2.5px;color:var(--ink-soft);text-transform:uppercase;margin-top:2px;}
+  .back{text-decoration:none;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap;}
+  .back:hover{color:var(--mint-deep);}
+  .lang{display:flex;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;font-size:12px;font-weight:600;flex:none;}
+  .lang button{border:0;background:transparent;color:var(--ink-soft);cursor:pointer;padding:5px 10px;border-radius:999px;font:inherit;transition:.15s;}
+  .lang button.active{background:var(--mint-deep);color:#fff;}
+
+  main{max-width:var(--maxw);margin:0 auto;padding:0 18px 80px;}
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;}
+
+  .hero{padding:44px 0 8px;text-align:center;}
+  .hero h1{font-size:clamp(30px,7.5vw,50px);}
+  .hero h1 em{font-family:'Great Vibes',cursive;font-style:normal;color:var(--blush-deep);font-weight:400;}
+  .hero .lead{max-width:520px;margin:14px auto 0;color:var(--ink-soft);font-size:clamp(15px,3.6vw,18px);}
+  .price-badge{display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin:24px auto 0;padding:16px 30px;border-radius:20px;background:linear-gradient(135deg,var(--blush),var(--blush-deep));color:#fff;box-shadow:var(--shadow);}
+  .price-badge .free{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;}
+  .price-badge .then{font-size:13px;opacity:.95;}
+  .price-badge .cancel{font-size:11.5px;opacity:.85;margin-top:2px;}
+
+  .perks{display:grid;grid-template-columns:1fr;gap:12px;margin:34px 0 10px;}
+  .perk{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-sm);}
+  .perk .ico{font-size:24px;flex:none;}
+  .perk h3{font-size:15.5px;margin-bottom:2px;}
+  .perk p{font-size:13px;color:var(--ink-soft);}
+
+  .sec-head{text-align:center;margin:52px 0 22px;}
+  .sec-head h2{font-size:clamp(24px,6vw,34px);}
+  .sec-head p{color:var(--ink-soft);margin-top:8px;font-size:14.5px;}
+
+  form.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow-sm);}
+  fieldset{border:0;padding:0;margin:0 0 22px;}
+  fieldset:last-of-type{margin-bottom:0;}
+  legend{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:8px;}
+  legend .dot{width:8px;height:8px;border-radius:50%;background:var(--blush-deep);}
+  .field{margin-top:14px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .field .req{color:var(--blush-deep);}
+  .grid-2{display:grid;grid-template-columns:1fr;gap:14px;}
+  input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--cream);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;transition:.15s;}
+  input::placeholder,textarea::placeholder{color:#b6a89d;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--mint);background:#fff;box-shadow:0 0 0 4px var(--mint-soft);}
+  textarea{resize:vertical;min-height:80px;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{position:relative;}
+  .chip input{position:absolute;opacity:0;width:0;height:0;}
+  .chip span{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--cream);font-size:13.5px;font-weight:500;cursor:pointer;transition:.15s;user-select:none;}
+  .chip input:checked + span{background:var(--blush-soft);border-color:var(--blush);color:var(--blush-deep);}
+  .chip input:focus-visible + span{box-shadow:0 0 0 4px var(--mint-soft);}
+
+  .error{color:var(--danger);font-size:12.5px;margin-top:6px;display:none;}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--danger);background:#fdf0ec;}
+  .field.invalid .error{display:block;}
+
+  /* Terms */
+  .tos-wrap{margin-top:14px;}
+  .tos-box{max-height:220px;overflow-y:auto;background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+  .tos-box h4{font-family:'Poppins';font-size:13px;color:var(--ink);margin:14px 0 4px;font-weight:700;}
+  .tos-box h4:first-child{margin-top:0;}
+  .tos-box p{margin:0 0 6px;}
+  .agree{display:flex;gap:11px;align-items:flex-start;margin-top:14px;padding:14px;border:1.5px solid var(--line);border-radius:14px;background:var(--mint-soft);cursor:pointer;}
+  .agree input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--mint-deep);cursor:pointer;}
+  .agree span{font-size:13px;font-weight:500;}
+  .field.invalid .agree{border-color:var(--danger);background:#fdf0ec;}
+  .tos-note{font-size:11px;color:var(--ink-soft);margin-top:8px;font-style:italic;}
+
+  .submit-row{margin-top:22px;display:grid;gap:10px;}
+  .btn{border:0;cursor:pointer;font:inherit;font-weight:600;text-decoration:none;padding:15px 24px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s ease, box-shadow .2s, background .2s;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:linear-gradient(135deg,var(--blush),var(--blush-deep));color:#fff;box-shadow:var(--shadow);font-size:16px;}
+  .btn-primary:hover{box-shadow:0 14px 34px -12px rgba(222,127,149,.7);}
+  .btn-alt{background:var(--mint-deep);color:#fff;}
+  .btn-alt:hover{background:#437f78;}
+  .submit-note{font-size:11.5px;color:var(--ink-soft);text-align:center;margin-top:2px;}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;z-index:80;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  footer.site{border-top:1px solid var(--line);margin-top:40px;background:rgba(255,255,255,.5);}
+  .foot{max-width:var(--maxw);margin:0 auto;padding:30px 18px;text-align:center;}
+  .foot .name{font-family:'Great Vibes',cursive;font-size:30px;color:var(--mint-deep);}
+  .foot p{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .copyright{font-size:11.5px;color:#b6a89d;padding-bottom:24px;text-align:center;}
+
+  @media(min-width:720px){
+    .perks{grid-template-columns:1fr 1fr;}
+    .grid-2{grid-template-columns:1fr 1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="index.html" aria-label="Naeri Desserts home">
+      <span class="mark">🍰</span>
+      <span class="name">Naeri<small>Desserts</small></span>
+    </a>
+    <a class="back" href="index.html" data-i18n="nav_back">← Order a cake</a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" class="active">EN</button>
+      <button type="button" data-lang="es">ES</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <span class="eyebrow" data-i18n="hero_eyebrow">Members save on every order</span>
+    <h1 data-i18n="hero_title">Join the <em>Sweet Club</em></h1>
+    <p class="lead" data-i18n="hero_lead">Naeri’s membership for our sweetest regulars — perks on every cake, priority booking, and a treat on your birthday.</p>
+    <div class="price-badge">
+      <span class="free" data-i18n="badge_free">First month FREE 🎉</span>
+      <span class="then" data-i18n="badge_then">then $9.99 / month</span>
+      <span class="cancel" data-i18n="badge_cancel">Cancel anytime</span>
+    </div>
+  </section>
+
+  <section class="perks" id="perks"></section>
+
+  <section id="join">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="join_eyebrow">2-minute sign-up</span>
+      <h2 data-i18n="join_title">Start your free month</h2>
+      <p data-i18n="join_sub">Tell us a little about you so we can make your treats perfect. No card charged during your free month.</p>
+    </div>
+
+    <form class="card" id="memberForm" novalidate>
+
+      <fieldset>
+        <legend><span class="dot"></span><span data-i18n="fs_you">About you</span></legend>
+        <div class="grid-2">
+          <div class="field" data-required>
+            <label for="name" data-i18n="l_name">Full name <span class="req">*</span></label>
+            <input type="text" id="name" required autocomplete="name" data-i18n-ph="ph_name" placeholder="Your name" />
+            <div class="error" data-i18n="err_name">Please enter your name.</div>
+          </div>
+          <div class="field" data-required>
+            <label for="phone" data-i18n="l_phone">Phone <span class="req">*</span></label>
+            <input type="tel" id="phone" required autocomplete="tel" inputmode="tel" placeholder="(956) 000-0000" />
+            <div class="error" data-i18n="err_phone">Please enter a valid phone number.</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="email" data-i18n="l_email">Email</label>
+            <input type="email" id="email" autocomplete="email" placeholder="you@email.com" />
+            <div class="error" data-i18n="err_email">Please enter a valid email.</div>
+          </div>
+          <div class="field">
+            <label for="birthday" data-i18n="l_birthday">Birthday (for your free treat 🎂)</label>
+            <input type="text" id="birthday" data-i18n-ph="ph_birthday" placeholder="e.g. March 14" />
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="l_city">Your area</label>
+          <div class="chips" id="cityChips" role="group" aria-label="Area"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="dot"></span><span data-i18n="fs_pref">Your sweet preferences</span></legend>
+        <div class="field">
+          <label data-i18n="l_flavors">Favorite flavors</label>
+          <div class="chips" id="flavorChips" role="group" aria-label="Flavors"></div>
+        </div>
+        <div class="field">
+          <label data-i18n="l_occasions">You usually order for…</label>
+          <div class="chips" id="occasionChips" role="group" aria-label="Occasions"></div>
+        </div>
+        <div class="field">
+          <label for="allergies" data-i18n="l_allergies">Allergies / dietary needs</label>
+          <input type="text" id="allergies" data-i18n-ph="ph_allergies" placeholder="e.g. nut allergy, no red dye" />
+        </div>
+        <div class="field">
+          <label for="notes" data-i18n="l_notes">Anything else we should know?</label>
+          <textarea id="notes" data-i18n-ph="ph_notes" placeholder="Tell us how we can make your membership sweeter…"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="dot"></span><span data-i18n="fs_terms">Terms of Service</span></legend>
+        <div class="tos-wrap">
+          <div class="tos-box" id="tosBox" tabindex="0" aria-label="Terms of Service"></div>
+          <label class="field agree-field" style="margin-top:0;" data-required>
+            <span class="agree">
+              <input type="checkbox" id="agree" required />
+              <span data-i18n="agree_txt">I have read and agree to the Terms of Service, and I authorize a $9.99/month membership that begins after my free first month. I can cancel anytime.</span>
+            </span>
+            <div class="error" data-i18n="err_agree">You must agree to the Terms to continue.</div>
+          </label>
+          <p class="tos-note" data-i18n="tos_note">Template terms — Naeri should review and adjust before use.</p>
+        </div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button type="button" class="btn btn-primary" id="sendWa" data-i18n="send_wa">🎉 Start my free month</button>
+        <button type="button" class="btn btn-alt" id="sendEmail" data-i18n="send_email">✉️ Sign up by email</button>
+        <p class="submit-note" data-i18n="send_note">This sends your sign-up to Naeri. You won’t be charged during your free month.</p>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="foot">
+    <div class="name">Naeri Desserts</div>
+    <p data-i18n="foot_tag">Endulzamos tus momentos más especiales 💕</p>
+  </div>
+  <p class="copyright">© <span id="yr"></span> Naeri Desserts · Sweet Club</p>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* =========================================================
+   CONFIG — same contact settings as the order app.
+   ========================================================= */
+const CONFIG = {
+  businessName: "Naeri Desserts",
+  whatsapp: "",                        // country code + number, digits only (e.g. "19560001234")
+  email:    "naeridesserts@gmail.com",
+  price: "$9.99",
+  currency: "$"
+};
+
+const CITIES   = [
+  {id:"pharr", en:"Pharr", es:"Pharr"},
+  {id:"mcallen", en:"McAllen", es:"McAllen"},
+  {id:"mission", en:"Mission", es:"Mission"},
+  {id:"edinburg", en:"Edinburg", es:"Edinburg"},
+  {id:"other", en:"Other", es:"Otro"},
+];
+const FLAVORS  = [
+  {id:"vanilla",en:"Vanilla",es:"Vainilla"},{id:"chocolate",en:"Chocolate",es:"Chocolate"},
+  {id:"tresleches",en:"Tres leches",es:"Tres leches"},{id:"strawberry",en:"Strawberry",es:"Fresa"},
+  {id:"redvelvet",en:"Red velvet",es:"Red velvet"},{id:"marble",en:"Marble",es:"Marmoleado"},
+];
+const OCCASIONS= [
+  {id:"birthday",en:"Birthdays 🎂",es:"Cumpleaños 🎂"},{id:"baptism",en:"Baptisms 🕊️",es:"Bautizos 🕊️"},
+  {id:"quince",en:"Quinceañeras 👑",es:"Quinceañeras 👑"},{id:"parties",en:"Parties 🎉",es:"Fiestas 🎉"},
+  {id:"justbecause",en:"Just because 💕",es:"Porque sí 💕"},
+];
+const PERKS = [
+  {ico:"💸", en:["10% off every cake","Members save on every custom order, all year."], es:["10% en cada pastel","Ahorra en cada pedido personalizado, todo el año."]},
+  {ico:"⭐", en:["Priority booking","Skip the wait — members get first pick on busy dates."], es:["Reserva prioritaria","Sin esperas — los miembros eligen primero en fechas ocupadas."]},
+  {ico:"🚗", en:["Free local delivery","We bring your treats to you across the Valley."], es:["Entrega local gratis","Llevamos tus postres en todo el Valle."]},
+  {ico:"🎂", en:["A free birthday treat","Celebrate with a sweet on us every year."], es:["Postre de cumpleaños gratis","Celebra con un dulce de nuestra parte cada año."]},
+];
+
+/* ---- Terms of Service (plain-language template) ---- */
+const TOS = {
+  en:[
+    ["1. Membership","The Naeri Sweet Club is an optional monthly membership offered by Naeri Desserts. Membership gives you the perks described on this page, which may change from time to time."],
+    ["2. Free first month","Your first month is free. You will not be charged during this trial period. If you do not cancel before the free month ends, your paid membership begins automatically."],
+    ["3. Price & billing","After the free month, membership costs $9.99 per month. It renews automatically each month until you cancel. Prices may change with at least 30 days' notice."],
+    ["4. Cancellation","You may cancel anytime by messaging Naeri Desserts. Cancellation stops future charges; the current month is not pro-rated or refunded. You keep member perks until the paid period ends."],
+    ["5. Perks & orders","Member discounts apply to standard custom cake orders and cannot be combined with other promotions unless stated. Perks have no cash value. Cakes are still made to order and subject to availability and lead time."],
+    ["6. Refunds","Membership fees are non-refundable except where required by law. Issues with a specific cake are handled under our normal order policy."],
+    ["7. Contact","Questions, changes, or cancellation? Message Naeri Desserts by WhatsApp or email anytime."],
+  ],
+  es:[
+    ["1. Membresía","El Naeri Sweet Club es una membresía mensual opcional de Naeri Desserts. La membresía te da los beneficios descritos en esta página, que pueden cambiar ocasionalmente."],
+    ["2. Primer mes gratis","Tu primer mes es gratis. No se te cobrará durante este periodo de prueba. Si no cancelas antes de que termine el mes gratis, tu membresía de pago comienza automáticamente."],
+    ["3. Precio y cobro","Después del mes gratis, la membresía cuesta $9.99 al mes. Se renueva automáticamente cada mes hasta que canceles. Los precios pueden cambiar con al menos 30 días de aviso."],
+    ["4. Cancelación","Puedes cancelar en cualquier momento enviando un mensaje a Naeri Desserts. La cancelación detiene cobros futuros; el mes en curso no se prorratea ni se reembolsa. Conservas los beneficios hasta que termine el periodo pagado."],
+    ["5. Beneficios y pedidos","Los descuentos aplican a pedidos estándar de pasteles personalizados y no se combinan con otras promociones salvo indicación. Los beneficios no tienen valor en efectivo. Los pasteles se hacen por pedido, sujetos a disponibilidad y tiempo de preparación."],
+    ["6. Reembolsos","Las cuotas de membresía no son reembolsables salvo donde la ley lo exija. Los problemas con un pastel específico se atienden bajo nuestra política normal de pedidos."],
+    ["7. Contacto","¿Preguntas, cambios o cancelación? Escribe a Naeri Desserts por WhatsApp o correo en cualquier momento."],
+  ]
+};
+
+const I18N = {
+  en:{
+    nav_back:"← Order a cake",
+    hero_eyebrow:"Members save on every order", hero_title:"Join the ",
+    hero_lead:"Naeri’s membership for our sweetest regulars — perks on every cake, priority booking, and a treat on your birthday.",
+    badge_free:"First month FREE 🎉", badge_then:"then $9.99 / month", badge_cancel:"Cancel anytime",
+    join_eyebrow:"2-minute sign-up", join_title:"Start your free month",
+    join_sub:"Tell us a little about you so we can make your treats perfect. No card charged during your free month.",
+    fs_you:"About you", fs_pref:"Your sweet preferences", fs_terms:"Terms of Service",
+    l_name:"Full name", l_phone:"Phone", l_email:"Email", l_birthday:"Birthday (for your free treat 🎂)",
+    l_city:"Your area", l_flavors:"Favorite flavors", l_occasions:"You usually order for…",
+    l_allergies:"Allergies / dietary needs", l_notes:"Anything else we should know?",
+    ph_name:"Your name", ph_birthday:"e.g. March 14", ph_allergies:"e.g. nut allergy, no red dye",
+    ph_notes:"Tell us how we can make your membership sweeter…",
+    err_name:"Please enter your name.", err_phone:"Please enter a valid phone number.",
+    err_email:"Please enter a valid email.", err_agree:"You must agree to the Terms to continue.",
+    agree_txt:"I have read and agree to the Terms of Service, and I authorize a $9.99/month membership that begins after my free first month. I can cancel anytime.",
+    tos_note:"Template terms — Naeri should review and adjust before use.",
+    send_wa:"🎉 Start my free month", send_email:"✉️ Sign up by email",
+    send_note:"This sends your sign-up to Naeri. You won’t be charged during your free month.",
+    foot_tag:"Endulzamos tus momentos más especiales 💕",
+    r_name:"Name", r_phone:"Phone", r_email:"Email", r_birthday:"Birthday", r_city:"Area",
+    r_flavors:"Favorite flavors", r_occasions:"Orders for", r_allergies:"Allergies", r_notes:"Notes",
+    msg_head:"New Sweet Club sign-up 🎉 (free month → $9.99/mo)", agreed:"Agreed to Terms of Service: YES",
+    copied:"Sent!", validate:"Please complete the highlighted fields."
+  },
+  es:{
+    nav_back:"← Ordenar un pastel",
+    hero_eyebrow:"Los miembros ahorran en cada pedido", hero_title:"Únete al ",
+    hero_lead:"La membresía de Naeri para nuestros clientes más dulces — beneficios en cada pastel, reserva prioritaria y un regalo en tu cumpleaños.",
+    badge_free:"Primer mes GRATIS 🎉", badge_then:"luego $9.99 / mes", badge_cancel:"Cancela cuando quieras",
+    join_eyebrow:"Registro en 2 minutos", join_title:"Empieza tu mes gratis",
+    join_sub:"Cuéntanos un poco de ti para hacer tus postres perfectos. No se cobra tarjeta durante tu mes gratis.",
+    fs_you:"Sobre ti", fs_pref:"Tus preferencias dulces", fs_terms:"Términos del servicio",
+    l_name:"Nombre completo", l_phone:"Teléfono", l_email:"Correo", l_birthday:"Cumpleaños (para tu regalo 🎂)",
+    l_city:"Tu área", l_flavors:"Sabores favoritos", l_occasions:"Normalmente pides para…",
+    l_allergies:"Alergias / necesidades dietéticas", l_notes:"¿Algo más que debamos saber?",
+    ph_name:"Tu nombre", ph_birthday:"ej. 14 de marzo", ph_allergies:"ej. alergia a nueces, sin colorante rojo",
+    ph_notes:"Dinos cómo hacer tu membresía más dulce…",
+    err_name:"Escribe tu nombre.", err_phone:"Escribe un teléfono válido.",
+    err_email:"Escribe un correo válido.", err_agree:"Debes aceptar los Términos para continuar.",
+    agree_txt:"He leído y acepto los Términos del servicio, y autorizo una membresía de $9.99/mes que inicia después de mi primer mes gratis. Puedo cancelar cuando quiera.",
+    tos_note:"Términos de plantilla — Naeri debe revisarlos y ajustarlos antes de usarlos.",
+    send_wa:"🎉 Empezar mi mes gratis", send_email:"✉️ Registrarme por correo",
+    send_note:"Esto envía tu registro a Naeri. No se te cobrará durante tu mes gratis.",
+    foot_tag:"Endulzamos tus momentos más especiales 💕",
+    r_name:"Nombre", r_phone:"Teléfono", r_email:"Correo", r_birthday:"Cumpleaños", r_city:"Área",
+    r_flavors:"Sabores favoritos", r_occasions:"Pedidos para", r_allergies:"Alergias", r_notes:"Notas",
+    msg_head:"Nuevo registro Sweet Club 🎉 (mes gratis → $9.99/mes)", agreed:"Aceptó los Términos del servicio: SÍ",
+    copied:"¡Enviado!", validate:"Completa los campos marcados."
+  }
+};
+
+let lang = "en";
+const $ = s => document.querySelector(s);
+const t = k => I18N[lang][k];
+
+function checkHTML(name, item){
+  return `<label class="chip"><input type="checkbox" name="${name}" value="${item.id}" /><span>${item[lang]}</span></label>`;
+}
+function renderChips(){
+  $("#cityChips").innerHTML     = CITIES.map(c=>checkHTML("city_c",c)).join("");
+  $("#flavorChips").innerHTML   = FLAVORS.map(f=>checkHTML("flavor_c",f)).join("");
+  $("#occasionChips").innerHTML = OCCASIONS.map(o=>checkHTML("occasion_c",o)).join("");
+}
+function renderPerks(){
+  $("#perks").innerHTML = PERKS.map(p=>`
+    <div class="perk"><span class="ico">${p.ico}</span><div><h3>${p[lang][0]}</h3><p>${p[lang][1]}</p></div></div>`).join("");
+}
+function renderTOS(){
+  $("#tosBox").innerHTML = TOS[lang].map(([h,b])=>`<h4>${h}</h4><p>${b}</p>`).join("");
+}
+
+function getChecked(name){ return [...document.querySelectorAll(`input[name="${name}"]:checked`)]; }
+function labelsFor(name, list){
+  return getChecked(name).map(i=>{ const it=list.find(x=>x.id===i.value); return it?it[lang]:i.value; });
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function clearError(f){ if(f) f.classList.remove("invalid"); }
+function validate(){
+  let ok=true, firstBad=null;
+  const req = [["#name", v=>!v.trim()], ["#phone", v=>v.replace(/\D/g,"").length<7]];
+  req.forEach(([sel,badFn])=>{
+    const el=$(sel), f=el.closest(".field"); const bad=badFn(el.value);
+    f.classList.toggle("invalid",bad); if(bad){ok=false; if(!firstBad)firstBad=f;}
+  });
+  const email=$("#email"), ef=email.closest(".field");
+  if(email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){ef.classList.add("invalid");ok=false;if(!firstBad)firstBad=ef;}
+  else ef.classList.remove("invalid");
+  const agreeField=$("#agree").closest(".field"); const agreed=$("#agree").checked;
+  agreeField.classList.toggle("invalid",!agreed); if(!agreed){ok=false; if(!firstBad)firstBad=agreeField;}
+  if(firstBad) firstBad.scrollIntoView({behavior:"smooth",block:"center"});
+  return ok;
+}
+
+function buildMessage(){
+  const L=[]; L.push(`*${t("msg_head")}*`); L.push("");
+  const row=(k,v)=>{ if(v && String(v).length) L.push(`• ${k}: ${v}`); };
+  row(t("r_name"), $("#name").value.trim());
+  row(t("r_phone"), $("#phone").value.trim());
+  row(t("r_email"), $("#email").value.trim());
+  row(t("r_birthday"), $("#birthday").value.trim());
+  row(t("r_city"), labelsFor("city_c",CITIES).join(", "));
+  row(t("r_flavors"), labelsFor("flavor_c",FLAVORS).join(", "));
+  row(t("r_occasions"), labelsFor("occasion_c",OCCASIONS).join(", "));
+  row(t("r_allergies"), $("#allergies").value.trim());
+  row(t("r_notes"), $("#notes").value.trim());
+  L.push(""); L.push(t("agreed"));
+  L.push(lang==="es"?"Plan: primer mes gratis, luego $9.99/mes":"Plan: first month free, then $9.99/month");
+  return L.join("\n");
+}
+
+function sendWhatsApp(){
+  if(!validate()){ toast(t("validate")); return; }
+  const text=encodeURIComponent(buildMessage());
+  const base = CONFIG.whatsapp ? `https://wa.me/${CONFIG.whatsapp}` : `https://wa.me/`;
+  window.open(`${base}?text=${text}`,"_blank");
+}
+function sendEmail(){
+  if(!validate()){ toast(t("validate")); return; }
+  const subject=encodeURIComponent(`${t("msg_head")} — ${$("#name").value.trim()}`);
+  const body=encodeURIComponent(buildMessage().replace(/\*/g,""));
+  window.location.href=`mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+}
+
+let toastTimer;
+function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2600); }
+
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(I18N[lang][k]!==undefined) el.textContent=I18N[lang][k]; });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]!==undefined) el.placeholder=I18N[lang][k]; });
+  $(".hero h1").innerHTML = t("hero_title") + `<em>${lang==="es"?"Sweet Club":"Sweet Club"}</em>`;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+  // re-render language-dependent lists, preserving checks
+  const snap = {
+    city:getChecked("city_c").map(i=>i.value), flavor:getChecked("flavor_c").map(i=>i.value), occasion:getChecked("occasion_c").map(i=>i.value)
+  };
+  renderChips(); renderPerks(); renderTOS();
+  const restore=(name,vals)=>vals.forEach(v=>{const el=document.querySelector(`input[name="${name}"][value="${v}"]`); if(el)el.checked=true;});
+  restore("city_c",snap.city); restore("flavor_c",snap.flavor); restore("occasion_c",snap.occasion);
+}
+
+function init(){
+  renderChips(); renderPerks(); renderTOS();
+  $("#yr").textContent=new Date().getFullYear();
+  document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{ lang=b.dataset.lang; applyLang(); }));
+  ["name","phone","email"].forEach(id=>$("#"+id).addEventListener("input",()=>clearError($("#"+id).closest(".field"))));
+  $("#agree").addEventListener("change",()=>clearError($("#agree").closest(".field")));
+  $("#sendWa").addEventListener("click",sendWhatsApp);
+  $("#sendEmail").addEventListener("click",sendEmail);
+  applyLang();
+}
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
