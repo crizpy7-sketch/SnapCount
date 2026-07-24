@@ -1,0 +1,49 @@
+name: Deploy Naeri Desserts to GitHub Pages
+
+# Publishes the cake order app (naeri-desserts/) to GitHub Pages.
+# Uses configure-pages with enablement:true so the very first run turns
+# Pages on automatically — no manual repo setting needed.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'naeri-desserts/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deploy at a time; don't cancel an in-progress publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages (auto-enable)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload app as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Serve the cake app at the site root:
+          # https://crizpy7-sketch.github.io/SnapCount/
+          path: ./naeri-desserts
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
