@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#7FC9C1" />
+<title>Naeri Desserts — Order a Custom Cake</title>
+<meta name="description" content="Order a custom cake from Naeri Desserts. Birthdays, baptisms, themed cakes, cupcakes and more. Serving Pharr, McAllen, Mission & Edinburg, TX." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#FBF6F1;
+    --cream-2:#F4EBE2;
+    --card:#FFFFFF;
+    --mint:#7FC9C1;
+    --mint-deep:#4E9E96;
+    --mint-soft:#E4F3F1;
+    --blush:#EFA9B9;
+    --blush-deep:#DE7F95;
+    --blush-soft:#FBE9ED;
+    --gold:#C79A4C;
+    --gold-soft:#F3E7CC;
+    --ink:#3B332F;
+    --ink-soft:#77685f;
+    --line:#EADFD4;
+    --danger:#C0553F;
+    --ok:#3E8E6E;
+    --radius:18px;
+    --shadow:0 10px 30px -12px rgba(83,60,45,.28);
+    --shadow-sm:0 4px 14px -8px rgba(83,60,45,.35);
+    --maxw:960px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 100% -10%, var(--mint-soft), transparent 55%),
+      radial-gradient(900px 500px at -10% 10%, var(--blush-soft), transparent 50%),
+      var(--cream);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;line-height:1.15;margin:0;}
+  p{margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(1.4) blur(10px);
+    background:rgba(251,246,241,.82);
+    border-bottom:1px solid var(--line);
+  }
+  .bar{
+    max-width:var(--maxw);margin:0 auto;padding:12px 18px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;margin-right:auto;text-decoration:none;min-width:0;}
+  .brand .mark{
+    width:42px;height:42px;border-radius:50%;flex:none;
+    display:grid;place-items:center;color:#fff;
+    background:linear-gradient(135deg,var(--mint),var(--mint-deep));
+    box-shadow:var(--shadow-sm);font-size:20px;
+  }
+  .brand .name{font-family:'Great Vibes',cursive;font-size:29px;line-height:1;color:var(--mint-deep);white-space:nowrap;}
+  .brand .name small{display:block;font-family:'Poppins';font-size:9.5px;letter-spacing:2.5px;color:var(--ink-soft);text-transform:uppercase;margin-top:2px;}
+  .nav{display:none;gap:22px;font-size:14px;font-weight:500;}
+  .nav a{text-decoration:none;color:var(--ink-soft);transition:color .15s;}
+  .nav a:hover{color:var(--mint-deep);}
+  .lang{
+    display:flex;align-items:center;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:3px;font-size:12px;font-weight:600;flex:none;
+  }
+  .lang button{
+    border:0;background:transparent;color:var(--ink-soft);cursor:pointer;
+    padding:5px 10px;border-radius:999px;font:inherit;transition:.15s;
+  }
+  .lang button.active{background:var(--mint-deep);color:#fff;}
+
+  /* ---------- Layout ---------- */
+  main{max-width:var(--maxw);margin:0 auto;padding:0 18px 80px;}
+  section{scroll-margin-top:80px;}
+  .eyebrow{
+    display:inline-block;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:10px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:46px 0 30px;text-align:center;}
+  .hero h1{font-size:clamp(32px,8vw,54px);}
+  .hero h1 em{font-family:'Great Vibes',cursive;font-style:normal;color:var(--blush-deep);font-weight:400;}
+  .hero p.lead{max-width:540px;margin:16px auto 0;color:var(--ink-soft);font-size:clamp(15px,3.6vw,18px);}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
+  .btn{
+    border:0;cursor:pointer;font:inherit;font-weight:600;text-decoration:none;
+    padding:13px 24px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .12s ease, box-shadow .2s, background .2s;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:linear-gradient(135deg,var(--blush),var(--blush-deep));color:#fff;box-shadow:var(--shadow);}
+  .btn-primary:hover{box-shadow:0 14px 34px -12px rgba(222,127,149,.7);}
+  .btn-ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--mint);}
+  .hero-badges{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:30px;color:var(--ink-soft);font-size:13px;}
+  .hero-badges span{display:inline-flex;align-items:center;gap:6px;}
+
+  /* ---------- Steps ---------- */
+  .steps{display:grid;grid-template-columns:1fr;gap:14px;margin-top:10px;}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow-sm);
+  }
+  .step .num{
+    width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;
+    font-weight:700;color:#fff;background:linear-gradient(135deg,var(--mint),var(--mint-deep));
+  }
+  .step h3{font-size:17px;margin-bottom:3px;}
+  .step p{font-size:13.5px;color:var(--ink-soft);}
+
+  /* ---------- Section heading ---------- */
+  .sec-head{text-align:center;margin:56px 0 26px;}
+  .sec-head h2{font-size:clamp(26px,6vw,38px);}
+  .sec-head p{color:var(--ink-soft);margin-top:8px;font-size:15px;}
+
+  /* ---------- Gallery ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .cake{
+    border-radius:var(--radius);overflow:hidden;position:relative;aspect-ratio:1/1.05;
+    box-shadow:var(--shadow-sm);border:1px solid var(--line);cursor:pointer;text-align:left;
+    color:#fff;padding:0;font:inherit;transition:transform .18s, box-shadow .2s;
+  }
+  .cake:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .cake .art{position:absolute;inset:0;display:grid;place-items:center;font-size:52px;}
+  .cake .label{
+    position:absolute;left:0;right:0;bottom:0;padding:26px 14px 14px;
+    background:linear-gradient(transparent,rgba(40,28,22,.72));
+    font-weight:600;font-size:14.5px;
+  }
+  .cake .label small{display:block;font-weight:400;font-size:11.5px;opacity:.85;}
+
+  /* ---------- Form ---------- */
+  .order-wrap{display:grid;grid-template-columns:1fr;gap:22px;margin-top:6px;}
+  form.order{
+    background:var(--card);border:1px solid var(--line);border-radius:22px;
+    padding:22px;box-shadow:var(--shadow-sm);
+  }
+  fieldset{border:0;padding:0;margin:0 0 22px;}
+  fieldset:last-of-type{margin-bottom:0;}
+  legend{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+  legend .dot{width:8px;height:8px;border-radius:50%;background:var(--blush-deep);}
+  .field{margin-top:14px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .field .req{color:var(--blush-deep);}
+  .grid-2{display:grid;grid-template-columns:1fr;gap:14px;}
+  input,select,textarea{
+    width:100%;font:inherit;color:var(--ink);background:var(--cream);
+    border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;transition:.15s;
+  }
+  input::placeholder,textarea::placeholder{color:#b6a89d;}
+  input:focus,select:focus,textarea:focus{
+    outline:none;border-color:var(--mint);background:#fff;box-shadow:0 0 0 4px var(--mint-soft);
+  }
+  textarea{resize:vertical;min-height:92px;}
+  .hint{font-size:12px;color:var(--ink-soft);margin-top:5px;}
+
+  /* chip choices */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{position:relative;}
+  .chip input{position:absolute;opacity:0;width:0;height:0;}
+  .chip span{
+    display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;
+    border:1.5px solid var(--line);background:var(--cream);font-size:13.5px;font-weight:500;
+    cursor:pointer;transition:.15s;user-select:none;
+  }
+  .chip input:checked + span{background:var(--mint-soft);border-color:var(--mint);color:var(--mint-deep);}
+  .chip input:focus-visible + span{box-shadow:0 0 0 4px var(--mint-soft);}
+  .chip.blush input:checked + span{background:var(--blush-soft);border-color:var(--blush);color:var(--blush-deep);}
+
+  .error{color:var(--danger);font-size:12.5px;margin-top:6px;display:none;}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--danger);background:#fdf0ec;}
+  .field.invalid .error{display:block;}
+
+  .rush-note{
+    display:none;margin-top:12px;padding:11px 14px;border-radius:12px;font-size:13px;
+    background:var(--gold-soft);border:1px solid #e6d3a3;color:#8a6d24;
+  }
+  .rush-note.show{display:block;}
+
+  /* ---------- Summary ---------- */
+  .summary{
+    background:linear-gradient(160deg,#fff,var(--mint-soft));
+    border:1px solid var(--line);border-radius:22px;padding:22px;
+    position:sticky;top:80px;box-shadow:var(--shadow-sm);
+  }
+  .summary h3{font-size:20px;margin-bottom:4px;}
+  .summary .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .sum-list{list-style:none;padding:0;margin:0 0 14px;font-size:13.5px;}
+  .sum-list li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed var(--line);}
+  .sum-list li span:first-child{color:var(--ink-soft);}
+  .sum-list li span:last-child{font-weight:600;text-align:right;}
+  .sum-list li.empty{color:#b6a89d;justify-content:center;border:0;font-style:italic;}
+  .estimate{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);margin-bottom:6px;
+  }
+  .estimate .lbl{font-size:13px;color:var(--ink-soft);}
+  .estimate .val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--mint-deep);}
+  .estimate-note{font-size:11.5px;color:var(--ink-soft);text-align:center;margin:8px 2px 0;}
+  .send-row{display:grid;gap:10px;margin-top:16px;}
+  .btn-wa{background:#25D366;color:#fff;justify-content:center;box-shadow:var(--shadow-sm);}
+  .btn-wa:hover{background:#1eb857;}
+  .btn-email{background:var(--mint-deep);color:#fff;justify-content:center;}
+  .btn-email:hover{background:#437f78;}
+  .btn-copy{background:var(--card);border:1px solid var(--line);justify-content:center;}
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;
+    font-weight:500;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;z-index:80;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ---------- Footer ---------- */
+  footer.site{border-top:1px solid var(--line);margin-top:40px;background:rgba(255,255,255,.5);}
+  .foot{max-width:var(--maxw);margin:0 auto;padding:34px 18px;display:grid;gap:22px;grid-template-columns:1fr;text-align:center;}
+  .foot .name{font-family:'Great Vibes',cursive;font-size:32px;color:var(--mint-deep);}
+  .foot p{font-size:13.5px;color:var(--ink-soft);}
+  .foot .areas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+  .foot .areas span{background:var(--mint-soft);color:var(--mint-deep);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;}
+  .foot .social{display:flex;gap:14px;justify-content:center;margin-top:4px;}
+  .foot .social a{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;text-decoration:none;font-size:18px;transition:.15s;}
+  .foot .social a:hover{border-color:var(--blush);transform:translateY(-2px);}
+  .copyright{font-size:11.5px;color:#b6a89d;padding-bottom:26px;text-align:center;}
+
+  /* ---------- Responsive ---------- */
+  @media(min-width:720px){
+    .nav{display:flex;}
+    .steps{grid-template-columns:repeat(3,1fr);}
+    .gallery{grid-template-columns:repeat(3,1fr);}
+    .grid-2{grid-template-columns:1fr 1fr;}
+    .order-wrap{grid-template-columns:1.4fr 1fr;align-items:start;}
+    .foot{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Naeri Desserts home">
+      <span class="mark">🍰</span>
+      <span class="name">Naeri<small>Desserts</small></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#how" data-i18n="nav_how">How it works</a>
+      <a href="#gallery" data-i18n="nav_gallery">Cakes</a>
+      <a href="#order" data-i18n="nav_order">Order</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" class="active">EN</button>
+      <button type="button" data-lang="es">ES</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="eyebrow" data-i18n="hero_eyebrow">Custom cakes, made with love</span>
+    <h1 data-i18n="hero_title">Order your <em>dream cake</em></h1>
+    <p class="lead" data-i18n="hero_lead">Birthdays, baptisms, quinceañeras, themed cakes & cupcakes — tell us your vision and we’ll make it edible art. Serving the Rio Grande Valley.</p>
+    <div class="cta-row">
+      <a href="#order" class="btn btn-primary" data-i18n="hero_cta">🎂 Start my order</a>
+      <a href="#gallery" class="btn btn-ghost" data-i18n="hero_cta2">See our cakes</a>
+    </div>
+    <div class="hero-badges">
+      <span>🧁 <span data-i18n="badge_1">Any theme or flavor</span></span>
+      <span>📍 <span data-i18n="badge_2">Pharr · McAllen · Mission · Edinburg</span></span>
+      <span>💬 <span data-i18n="badge_3">Fast reply</span></span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="how_eyebrow">Simple & sweet</span>
+      <h2 data-i18n="how_title">How it works</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><div><h3 data-i18n="step1_t">Tell us your idea</h3><p data-i18n="step1_p">Fill out the order form with your occasion, flavor, size and design.</p></div></div>
+      <div class="step"><span class="num">2</span><div><h3 data-i18n="step2_t">We confirm & quote</h3><p data-i18n="step2_p">You’ll get a message back with the final price, availability and a deposit link.</p></div></div>
+      <div class="step"><span class="num">3</span><div><h3 data-i18n="step3_t">Pick up your cake</h3><p data-i18n="step3_p">Fresh, beautiful and ready for your celebration. Delivery available locally.</p></div></div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="gallery_eyebrow">Inspiration</span>
+      <h2 data-i18n="gallery_title">A taste of our work</h2>
+      <p data-i18n="gallery_sub">Tap a style to start an order with it.</p>
+    </div>
+    <div class="gallery" id="galleryGrid"></div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="order">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="order_eyebrow">Let’s bake</span>
+      <h2 data-i18n="order_title">Place your order</h2>
+      <p data-i18n="order_sub">No payment now — this sends your request. We’ll confirm details & price.</p>
+    </div>
+
+    <div class="order-wrap">
+      <form class="order" id="orderForm" novalidate>
+
+        <fieldset>
+          <legend><span class="dot"></span><span data-i18n="fs_occasion">The occasion</span></legend>
+
+          <div class="field" data-required>
+            <label data-i18n="l_occasion">What are we celebrating? <span class="req">*</span></label>
+            <div class="chips" id="occasionChips" role="group" aria-label="Occasion"></div>
+            <input type="hidden" id="occasion" required />
+            <div class="error" data-i18n="err_occasion">Please pick an occasion.</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field" data-required>
+              <label for="date" data-i18n="l_date">Date needed <span class="req">*</span></label>
+              <input type="date" id="date" required />
+              <div class="error" data-i18n="err_date">Please choose a valid date.</div>
+            </div>
+            <div class="field">
+              <label for="theme" data-i18n="l_theme">Theme / colors</label>
+              <input type="text" id="theme" data-i18n-ph="ph_theme" placeholder="e.g. Spider-Man, pastel florals, BMW…" />
+            </div>
+          </div>
+          <div class="rush-note" id="rushNote"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="dot"></span><span data-i18n="fs_cake">The cake</span></legend>
+
+          <div class="field" data-required>
+            <label data-i18n="l_size">Size / servings <span class="req">*</span></label>
+            <div class="chips" id="sizeChips" role="group" aria-label="Size"></div>
+            <input type="hidden" id="size" required />
+            <div class="error" data-i18n="err_size">Please choose a size.</div>
+          </div>
+
+          <div class="field" data-required>
+            <label data-i18n="l_flavor">Flavor <span class="req">*</span></label>
+            <div class="chips" id="flavorChips" role="group" aria-label="Flavor"></div>
+            <input type="hidden" id="flavor" required />
+            <div class="error" data-i18n="err_flavor">Please choose a flavor.</div>
+          </div>
+
+          <div class="field">
+            <label data-i18n="l_extras">Extras</label>
+            <div class="chips" id="extraChips" role="group" aria-label="Extras"></div>
+          </div>
+
+          <div class="field">
+            <label for="details" data-i18n="l_details">Design details</label>
+            <textarea id="details" data-i18n-ph="ph_details" placeholder="Describe the design, cake topper, inscription (“Happy 5th Birthday Gael”), number of tiers, references…"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="allergies" data-i18n="l_allergies">Allergies / notes</label>
+            <input type="text" id="allergies" data-i18n-ph="ph_allergies" placeholder="e.g. nut allergy, no red dye" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="dot"></span><span data-i18n="fs_you">Your details</span></legend>
+          <div class="grid-2">
+            <div class="field" data-required>
+              <label for="name" data-i18n="l_name">Name <span class="req">*</span></label>
+              <input type="text" id="name" required autocomplete="name" data-i18n-ph="ph_name" placeholder="Your name" />
+              <div class="error" data-i18n="err_name">Please enter your name.</div>
+            </div>
+            <div class="field" data-required>
+              <label for="phone" data-i18n="l_phone">Phone <span class="req">*</span></label>
+              <input type="tel" id="phone" required autocomplete="tel" inputmode="tel" data-i18n-ph="ph_phone" placeholder="(956) 000-0000" />
+              <div class="error" data-i18n="err_phone">Please enter a valid phone number.</div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="email" data-i18n="l_email">Email</label>
+              <input type="email" id="email" autocomplete="email" placeholder="you@email.com" />
+              <div class="error" data-i18n="err_email">Please enter a valid email.</div>
+            </div>
+            <div class="field" data-required>
+              <label data-i18n="l_fulfil">Pickup or delivery? <span class="req">*</span></label>
+              <div class="chips" id="fulfilChips" role="group" aria-label="Pickup or delivery"></div>
+              <input type="hidden" id="fulfil" required />
+              <div class="error" data-i18n="err_fulfil">Please choose one.</div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- LIVE SUMMARY -->
+      <aside class="summary" aria-live="polite">
+        <h3 data-i18n="sum_title">Your order</h3>
+        <p class="sub" data-i18n="sum_sub">Updates as you fill it out</p>
+        <ul class="sum-list" id="sumList"></ul>
+        <div class="estimate">
+          <span class="lbl" data-i18n="sum_est">Estimated total</span>
+          <span class="val" id="estVal">—</span>
+        </div>
+        <p class="estimate-note" data-i18n="sum_note">Estimate only. Final price confirmed by Naeri based on detail & design.</p>
+        <div class="send-row">
+          <button type="button" class="btn btn-wa" id="sendWa" data-i18n="send_wa">💬 Send via WhatsApp</button>
+          <button type="button" class="btn btn-email" id="sendEmail" data-i18n="send_email">✉️ Send via Email</button>
+          <button type="button" class="btn btn-copy" id="copyBtn" data-i18n="send_copy">📋 Copy order</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="foot">
+    <div class="name">Naeri Desserts</div>
+    <div>
+      <p data-i18n="foot_tag">Endulzamos tus momentos más especiales 💕</p>
+      <div class="areas">
+        <span>Pharr</span><span>McAllen</span><span>Mission</span><span>Edinburg</span>
+      </div>
+    </div>
+    <div class="social">
+      <a href="#" id="fbLink" aria-label="Facebook" title="Facebook">📘</a>
+      <a href="#" id="igLink" aria-label="Instagram" title="Instagram">📷</a>
+      <a href="#order" aria-label="Order" title="Order">🎂</a>
+    </div>
+  </div>
+  <p class="copyright">© <span id="yr"></span> Naeri Desserts · <span data-i18n="foot_made">Custom cakes in the Rio Grande Valley</span></p>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* =========================================================
+   CONFIG — Naeri: set these to your real contact details.
+   whatsapp: country code + number, digits only (US = 1).
+   ========================================================= */
+const CONFIG = {
+  businessName: "Naeri Desserts",
+  whatsapp: "",                       // e.g. "19560001234"  (leave "" to let WhatsApp pick the contact)
+  email:    "naeridesserts@gmail.com",// where email orders go
+  facebook: "https://www.facebook.com/",   // your Facebook page URL
+  instagram:"https://www.instagram.com/",  // your Instagram URL
+  minLeadDays: 5,                     // orders sooner than this add a rush fee
+  rushFee: 25,
+  currency: "$"
+};
+
+/* ---------------- Data ---------------- */
+const OCCASIONS = [
+  {id:"birthday",  en:"Birthday 🎂",   es:"Cumpleaños 🎂"},
+  {id:"baptism",   en:"Baptism 🕊️",    es:"Bautizo 🕊️"},
+  {id:"quince",    en:"Quinceañera 👑", es:"Quinceañera 👑"},
+  {id:"wedding",   en:"Wedding 💍",     es:"Boda 💍"},
+  {id:"anniv",     en:"Anniversary 💖", es:"Aniversario 💖"},
+  {id:"other",     en:"Other ✨",       es:"Otro ✨"},
+];
+const SIZES = [
+  {id:"cupcakes", price:36, en:"Dozen cupcakes", es:"Docena de cupcakes", note_en:"12 pieces", note_es:"12 piezas"},
+  {id:"6in",  price:45,  en:'6" round',   es:'Redondo 6"',  note_en:"8–10 servings", note_es:"8–10 porciones"},
+  {id:"8in",  price:65,  en:'8" round',   es:'Redondo 8"',  note_en:"15–20 servings", note_es:"15–20 porciones"},
+  {id:"10in", price:90,  en:'10" round',  es:'Redondo 10"', note_en:"25–30 servings", note_es:"25–30 porciones"},
+  {id:"2tier",price:160, en:"2 tiers",    es:"2 pisos",     note_en:"40–50 servings", note_es:"40–50 porciones"},
+  {id:"3tier",price:260, en:"3 tiers",    es:"3 pisos",     note_en:"70+ servings",   note_es:"70+ porciones"},
+];
+const FLAVORS = [
+  {id:"vanilla",  en:"Vanilla",     es:"Vainilla"},
+  {id:"chocolate",en:"Chocolate",   es:"Chocolate"},
+  {id:"tresleches",en:"Tres leches",es:"Tres leches"},
+  {id:"strawberry",en:"Strawberry", es:"Fresa"},
+  {id:"redvelvet",en:"Red velvet",  es:"Red velvet"},
+  {id:"marble",   en:"Marble",      es:"Marmoleado"},
+  {id:"other",    en:"Other",       es:"Otro"},
+];
+const EXTRAS = [
+  {id:"topper", price:20, en:"Custom topper 🧸", es:"Topper personalizado 🧸"},
+  {id:"edible", price:15, en:"Edible image 🖼️", es:"Imagen comestible 🖼️"},
+  {id:"flowers",price:15, en:"Fresh flowers 🌸", es:"Flores frescas 🌸"},
+  {id:"gold",   price:12, en:"Gold accents ✨",  es:"Detalles dorados ✨"},
+  {id:"number", price:8,  en:"Number/letter 🔢", es:"Número/letra 🔢"},
+];
+const FULFIL = [
+  {id:"pickup",   price:0,  en:"Pickup 🛍️",   es:"Recoger 🛍️"},
+  {id:"delivery", price:15, en:"Delivery 🚗", es:"Entrega 🚗"},
+];
+const GALLERY = [
+  {emoji:"🕷️", bg:"linear-gradient(135deg,#d0463b,#7c2b8f)", en:"Character cakes", es:"Pasteles temáticos", subEn:"Heroes, cars & more", subEs:"Héroes, autos y más", occ:"birthday", theme:{en:"Character / themed cake",es:"Pastel de personaje"}},
+  {emoji:"🕊️", bg:"linear-gradient(135deg,#8fd3cf,#4E9E96)", en:"Baptism", es:"Bautizo", subEn:"Elegant & tiered", subEs:"Elegante y de pisos", occ:"baptism", theme:{en:"Baptism cake",es:"Pastel de bautizo"}},
+  {emoji:"🌸", bg:"linear-gradient(135deg,#efa9b9,#DE7F95)", en:"Floral & elegant", es:"Floral y elegante", subEn:"Fresh flowers & gold", subEs:"Flores y dorado", occ:"anniv", theme:{en:"Floral elegant cake",es:"Pastel floral"}},
+  {emoji:"👑", bg:"linear-gradient(135deg,#c79a4c,#8a6d24)", en:"Quinceañera", es:"Quinceañera", subEn:"Show-stoppers", subEs:"Espectaculares", occ:"quince", theme:{en:"Quinceañera cake",es:"Pastel de quinceañera"}},
+  {emoji:"🧁", bg:"linear-gradient(135deg,#f6c9a8,#e89b6c)", en:"Cupcakes", es:"Cupcakes", subEn:"By the dozen", subEs:"Por docena", occ:"birthday", theme:{en:"Decorated cupcakes",es:"Cupcakes decorados"}},
+  {emoji:"🚗", bg:"linear-gradient(135deg,#5b8fd0,#2f5aa8)", en:"Custom themed", es:"Personalizado", subEn:"Your idea, edible", subEs:"Tu idea, comestible", occ:"birthday", theme:{en:"Custom themed cake",es:"Pastel personalizado"}},
+];
+
+/* ---------------- i18n ---------------- */
+const I18N = {
+  en:{
+    nav_how:"How it works", nav_gallery:"Cakes", nav_order:"Order",
+    hero_eyebrow:"Custom cakes, made with love", hero_title:"Order your ", hero_cta:"🎂 Start my order", hero_cta2:"See our cakes",
+    hero_lead:"Birthdays, baptisms, quinceañeras, themed cakes & cupcakes — tell us your vision and we’ll make it edible art. Serving the Rio Grande Valley.",
+    badge_1:"Any theme or flavor", badge_2:"Pharr · McAllen · Mission · Edinburg", badge_3:"Fast reply",
+    how_eyebrow:"Simple & sweet", how_title:"How it works",
+    step1_t:"Tell us your idea", step1_p:"Fill out the order form with your occasion, flavor, size and design.",
+    step2_t:"We confirm & quote", step2_p:"You’ll get a message back with the final price, availability and a deposit link.",
+    step3_t:"Pick up your cake", step3_p:"Fresh, beautiful and ready for your celebration. Delivery available locally.",
+    gallery_eyebrow:"Inspiration", gallery_title:"A taste of our work", gallery_sub:"Tap a style to start an order with it.",
+    order_eyebrow:"Let’s bake", order_title:"Place your order", order_sub:"No payment now — this sends your request. We’ll confirm details & price.",
+    fs_occasion:"The occasion", fs_cake:"The cake", fs_you:"Your details",
+    l_occasion:"What are we celebrating?", l_date:"Date needed", l_theme:"Theme / colors",
+    l_size:"Size / servings", l_flavor:"Flavor", l_extras:"Extras", l_details:"Design details", l_allergies:"Allergies / notes",
+    l_name:"Name", l_phone:"Phone", l_email:"Email", l_fulfil:"Pickup or delivery?",
+    ph_theme:"e.g. Spider-Man, pastel florals, BMW…", ph_details:"Describe the design, cake topper, inscription (“Happy 5th Birthday Gael”), number of tiers, references…",
+    ph_allergies:"e.g. nut allergy, no red dye", ph_name:"Your name", ph_phone:"(956) 000-0000",
+    err_occasion:"Please pick an occasion.", err_date:"Please choose a valid date.", err_size:"Please choose a size.",
+    err_flavor:"Please choose a flavor.", err_name:"Please enter your name.", err_phone:"Please enter a valid phone number.",
+    err_email:"Please enter a valid email.", err_fulfil:"Please choose one.",
+    sum_title:"Your order", sum_sub:"Updates as you fill it out", sum_est:"Estimated total",
+    sum_note:"Estimate only. Final price confirmed by Naeri based on detail & design.",
+    send_wa:"💬 Send via WhatsApp", send_email:"✉️ Send via Email", send_copy:"📋 Copy order",
+    foot_tag:"Endulzamos tus momentos más especiales 💕", foot_made:"Custom cakes in the Rio Grande Valley",
+    r_occasion:"Occasion", r_date:"Date", r_theme:"Theme", r_size:"Size", r_flavor:"Flavor", r_extras:"Extras",
+    r_fulfil:"Fulfillment", r_rush:"Rush order", r_none:"Add details to see your summary",
+    rush_txt:days=>`Heads up: that’s in ${days} day(s). Rush orders (under ${CONFIG.minLeadDays} days) may add a ${CONFIG.currency}${CONFIG.rushFee} fee and depend on availability.`,
+    past_txt:"Please choose a future date.",
+    msg_head:"New cake order 🎂", msg_from:"From", msg_est:"Estimated total",
+    copied:"Order copied to clipboard!", filled:"Started an order — scroll down 🎂",
+    validate:"Please complete the highlighted fields."
+  },
+  es:{
+    nav_how:"Cómo funciona", nav_gallery:"Pasteles", nav_order:"Ordenar",
+    hero_eyebrow:"Pasteles personalizados, hechos con amor", hero_title:"Ordena tu ", hero_cta:"🎂 Empezar mi orden", hero_cta2:"Ver pasteles",
+    hero_lead:"Cumpleaños, bautizos, quinceañeras, pasteles temáticos y cupcakes — cuéntanos tu idea y la hacemos arte comestible. Servimos el Valle.",
+    badge_1:"Cualquier tema o sabor", badge_2:"Pharr · McAllen · Mission · Edinburg", badge_3:"Respuesta rápida",
+    how_eyebrow:"Fácil y dulce", how_title:"Cómo funciona",
+    step1_t:"Cuéntanos tu idea", step1_p:"Llena el formulario con la ocasión, sabor, tamaño y diseño.",
+    step2_t:"Confirmamos y cotizamos", step2_p:"Te responderemos con el precio final, disponibilidad y el enlace del anticipo.",
+    step3_t:"Recoge tu pastel", step3_p:"Fresco, hermoso y listo para tu celebración. Entrega local disponible.",
+    gallery_eyebrow:"Inspiración", gallery_title:"Un poco de nuestro trabajo", gallery_sub:"Toca un estilo para empezar tu orden.",
+    order_eyebrow:"A hornear", order_title:"Haz tu pedido", order_sub:"Sin pago ahora — esto envía tu solicitud. Confirmamos detalles y precio.",
+    fs_occasion:"La ocasión", fs_cake:"El pastel", fs_you:"Tus datos",
+    l_occasion:"¿Qué celebramos?", l_date:"Fecha que lo necesitas", l_theme:"Tema / colores",
+    l_size:"Tamaño / porciones", l_flavor:"Sabor", l_extras:"Extras", l_details:"Detalles del diseño", l_allergies:"Alergias / notas",
+    l_name:"Nombre", l_phone:"Teléfono", l_email:"Correo", l_fulfil:"¿Recoger o entrega?",
+    ph_theme:"ej. Spider-Man, floral pastel, BMW…", ph_details:"Describe el diseño, topper, inscripción (“Feliz Cumpleaños Gael”), número de pisos, referencias…",
+    ph_allergies:"ej. alergia a nueces, sin colorante rojo", ph_name:"Tu nombre", ph_phone:"(956) 000-0000",
+    err_occasion:"Elige una ocasión.", err_date:"Elige una fecha válida.", err_size:"Elige un tamaño.",
+    err_flavor:"Elige un sabor.", err_name:"Escribe tu nombre.", err_phone:"Escribe un teléfono válido.",
+    err_email:"Escribe un correo válido.", err_fulfil:"Elige una opción.",
+    sum_title:"Tu orden", sum_sub:"Se actualiza mientras llenas", sum_est:"Total estimado",
+    sum_note:"Solo un estimado. Naeri confirma el precio final según el diseño.",
+    send_wa:"💬 Enviar por WhatsApp", send_email:"✉️ Enviar por correo", send_copy:"📋 Copiar orden",
+    foot_tag:"Endulzamos tus momentos más especiales 💕", foot_made:"Pasteles personalizados en el Valle",
+    r_occasion:"Ocasión", r_date:"Fecha", r_theme:"Tema", r_size:"Tamaño", r_flavor:"Sabor", r_extras:"Extras",
+    r_fulfil:"Entrega", r_rush:"Pedido urgente", r_none:"Agrega detalles para ver tu resumen",
+    rush_txt:days=>`Aviso: eso es en ${days} día(s). Pedidos urgentes (menos de ${CONFIG.minLeadDays} días) pueden tener un cargo de ${CONFIG.currency}${CONFIG.rushFee} y dependen de disponibilidad.`,
+    past_txt:"Elige una fecha futura.",
+    msg_head:"Nuevo pedido de pastel 🎂", msg_from:"De", msg_est:"Total estimado",
+    copied:"¡Orden copiada!", filled:"Empezamos una orden — desliza abajo 🎂",
+    validate:"Completa los campos marcados."
+  }
+};
+
+let lang = "en";
+const $ = s => document.querySelector(s);
+const t = k => I18N[lang][k];
+
+/* ---------------- Build chip groups ---------------- */
+function chipHTML(name, item, blush){
+  const label = item[lang];
+  const note = item["note_"+lang] ? ` · ${item["note_"+lang]}` : "";
+  return `<label class="chip ${blush?'blush':''}">
+    <input type="radio" name="${name}" value="${item.id}" />
+    <span>${label}${note}</span></label>`;
+}
+function checkHTML(name, item){
+  return `<label class="chip blush">
+    <input type="checkbox" name="${name}" value="${item.id}" />
+    <span>${item[lang]}</span></label>`;
+}
+function renderChips(){
+  $("#occasionChips").innerHTML = OCCASIONS.map(o=>chipHTML("occasion_r",o)).join("");
+  $("#sizeChips").innerHTML     = SIZES.map(s=>chipHTML("size_r",s)).join("");
+  $("#flavorChips").innerHTML   = FLAVORS.map(f=>chipHTML("flavor_r",f,true)).join("");
+  $("#extraChips").innerHTML    = EXTRAS.map(e=>checkHTML("extra_c",e)).join("");
+  $("#fulfilChips").innerHTML   = FULFIL.map(f=>chipHTML("fulfil_r",f)).join("");
+  wireChips();
+}
+function wireChips(){
+  const map = {occasion_r:"#occasion", size_r:"#size", flavor_r:"#flavor", fulfil_r:"#fulfil"};
+  Object.entries(map).forEach(([nm,sel])=>{
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(inp=>{
+      inp.addEventListener("change",()=>{ $(sel).value = inp.value; update(); clearError(inp.closest(".field")); });
+    });
+  });
+  document.querySelectorAll('input[name="extra_c"]').forEach(inp=>inp.addEventListener("change",update));
+}
+
+/* ---------------- Gallery ---------------- */
+function renderGallery(){
+  $("#galleryGrid").innerHTML = GALLERY.map((g,i)=>`
+    <button class="cake" data-i="${i}" type="button" style="background:${g.bg}">
+      <div class="art">${g.emoji}</div>
+      <div class="label">${g[lang]}<small>${g["sub"+lang.charAt(0).toUpperCase()+lang.slice(1)]}</small></div>
+    </button>`).join("");
+  document.querySelectorAll(".cake").forEach(c=>c.addEventListener("click",()=>{
+    const g = GALLERY[+c.dataset.i];
+    // preselect occasion
+    const occ = document.querySelector(`input[name="occasion_r"][value="${g.occ}"]`);
+    if(occ){occ.checked=true; $("#occasion").value=g.occ;}
+    if(!$("#theme").value) $("#theme").value = g.theme[lang];
+    update();
+    $("#order").scrollIntoView({behavior:"smooth"});
+    toast(t("filled"));
+  }));
+}
+
+/* ---------------- Estimate + summary ---------------- */
+function selData(list, val){ return list.find(x=>x.id===val); }
+function getExtras(){ return [...document.querySelectorAll('input[name="extra_c"]:checked')].map(i=>i.value); }
+function daysUntil(dateStr){
+  if(!dateStr) return null;
+  const d = new Date(dateStr+"T00:00:00");
+  const now = new Date(); now.setHours(0,0,0,0);
+  return Math.round((d-now)/86400000);
+}
+
+function computeEstimate(){
+  let total = 0, hasBase = false;
+  const size = selData(SIZES, $("#size").value);
+  if(size){ total += size.price; hasBase = true; }
+  getExtras().forEach(id=>{ const e = selData(EXTRAS,id); if(e) total += e.price; });
+  const fulfil = selData(FULFIL, $("#fulfil").value);
+  if(fulfil) total += fulfil.price;
+  const dleft = daysUntil($("#date").value);
+  const rush = (dleft!==null && dleft>=0 && dleft < CONFIG.minLeadDays);
+  if(rush && hasBase) total += CONFIG.rushFee;
+  return {total, hasBase, rush, dleft};
+}
+
+function summaryRows(){
+  const rows = [];
+  const occ = selData(OCCASIONS, $("#occasion").value);
+  if(occ) rows.push([t("r_occasion"), occ[lang]]);
+  if($("#date").value) rows.push([t("r_date"), fmtDate($("#date").value)]);
+  if($("#theme").value.trim()) rows.push([t("r_theme"), $("#theme").value.trim()]);
+  const size = selData(SIZES, $("#size").value);
+  if(size) rows.push([t("r_size"), `${size[lang]} · ${CONFIG.currency}${size.price}`]);
+  const flav = selData(FLAVORS, $("#flavor").value);
+  if(flav) rows.push([t("r_flavor"), flav[lang]]);
+  const ex = getExtras().map(id=>{const e=selData(EXTRAS,id);return `${e[lang]} (+${CONFIG.currency}${e.price})`;});
+  if(ex.length) rows.push([t("r_extras"), ex.join(", ")]);
+  const ful = selData(FULFIL, $("#fulfil").value);
+  if(ful) rows.push([t("r_fulfil"), ful.price?`${ful[lang]} (+${CONFIG.currency}${ful.price})`:ful[lang]]);
+  return rows;
+}
+
+function fmtDate(str){
+  const d = new Date(str+"T00:00:00");
+  return d.toLocaleDateString(lang==="es"?"es-US":"en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+}
+
+function update(){
+  const rows = summaryRows();
+  const est = computeEstimate();
+  const list = $("#sumList");
+  if(!rows.length){
+    list.innerHTML = `<li class="empty">${t("r_none")}</li>`;
+  } else {
+    let html = rows.map(([k,v])=>`<li><span>${k}</span><span>${escapeHTML(v)}</span></li>`).join("");
+    if(est.rush) html += `<li><span>${t("r_rush")}</span><span>+${CONFIG.currency}${CONFIG.rushFee}</span></li>`;
+    list.innerHTML = html;
+  }
+  $("#estVal").textContent = est.hasBase ? `${CONFIG.currency}${est.total}` : "—";
+
+  // rush note
+  const note = $("#rushNote");
+  if(est.dleft!==null && est.dleft<0){ note.textContent = t("past_txt"); note.classList.add("show"); }
+  else if(est.rush){ note.textContent = t("rush_txt")(est.dleft); note.classList.add("show"); }
+  else note.classList.remove("show");
+
+  saveDraft();
+}
+
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ---------------- Validation ---------------- */
+function clearError(field){ if(field) field.classList.remove("invalid"); }
+function validate(){
+  let ok = true, firstBad = null;
+  const reqFields = document.querySelectorAll('.field[data-required]');
+  reqFields.forEach(f=>{
+    const ctrl = f.querySelector('input[required],select[required],textarea[required]');
+    let bad = false;
+    if(ctrl){
+      if(ctrl.type==="hidden") bad = !ctrl.value;
+      else if(ctrl.id==="phone") bad = ctrl.value.replace(/\D/g,"").length < 7;
+      else bad = !ctrl.value.trim();
+    }
+    if(ctrl && ctrl.id==="date"){ const dl=daysUntil(ctrl.value); if(dl===null||dl<0) bad=true; }
+    f.classList.toggle("invalid", bad);
+    if(bad){ ok=false; if(!firstBad) firstBad=f; }
+  });
+  // email optional but if present must be valid
+  const email = $("#email");
+  const ef = email.closest(".field");
+  if(email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){ ef.classList.add("invalid"); ok=false; if(!firstBad) firstBad=ef; }
+  else ef.classList.remove("invalid");
+  if(firstBad) firstBad.scrollIntoView({behavior:"smooth",block:"center"});
+  return ok;
+}
+
+/* ---------------- Compose message ---------------- */
+function buildMessage(){
+  const est = computeEstimate();
+  const L = [];
+  L.push(`*${t("msg_head")}*`);
+  L.push("");
+  summaryRows().forEach(([k,v])=>L.push(`• ${k}: ${v}`));
+  if(est.rush) L.push(`• ${t("r_rush")}: +${CONFIG.currency}${CONFIG.rushFee}`);
+  const details = $("#details").value.trim();
+  if(details) L.push(`• ${lang==="es"?"Detalles":"Details"}: ${details}`);
+  const allerg = $("#allergies").value.trim();
+  if(allerg) L.push(`• ${lang==="es"?"Alergias":"Allergies"}: ${allerg}`);
+  L.push("");
+  L.push(`${t("msg_from")}: ${$("#name").value.trim()}`);
+  L.push(`📞 ${$("#phone").value.trim()}`);
+  if($("#email").value.trim()) L.push(`✉️ ${$("#email").value.trim()}`);
+  if(est.hasBase) L.push(`\n${t("msg_est")}: ~${CONFIG.currency}${est.total}`);
+  return L.join("\n");
+}
+
+function sendWhatsApp(){
+  if(!validate()){ toast(t("validate")); return; }
+  const text = encodeURIComponent(buildMessage());
+  const base = CONFIG.whatsapp ? `https://wa.me/${CONFIG.whatsapp}` : `https://wa.me/`;
+  window.open(`${base}?text=${text}`,"_blank");
+}
+function sendEmail(){
+  if(!validate()){ toast(t("validate")); return; }
+  const subject = encodeURIComponent(`${t("msg_head")} — ${$("#name").value.trim()}`);
+  const body = encodeURIComponent(buildMessage().replace(/\*/g,""));
+  window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+}
+async function copyOrder(){
+  if(!validate()){ toast(t("validate")); return; }
+  const text = buildMessage().replace(/\*/g,"");
+  try{ await navigator.clipboard.writeText(text); toast(t("copied")); }
+  catch{ const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); toast(t("copied")); }
+}
+
+/* ---------------- Toast ---------------- */
+let toastTimer;
+function toast(msg){
+  const el=$("#toast"); el.textContent=msg; el.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2600);
+}
+
+/* ---------------- Draft persistence ---------------- */
+const DRAFT_KEY="naeri_order_draft";
+function saveDraft(){
+  const d={
+    occasion:$("#occasion").value, date:$("#date").value, theme:$("#theme").value,
+    size:$("#size").value, flavor:$("#flavor").value, extras:getExtras(),
+    details:$("#details").value, allergies:$("#allergies").value,
+    name:$("#name").value, phone:$("#phone").value, email:$("#email").value, fulfil:$("#fulfil").value
+  };
+  try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); }catch{}
+}
+function loadDraft(){
+  let d; try{ d=JSON.parse(localStorage.getItem(DRAFT_KEY)); }catch{ return; }
+  if(!d) return;
+  const setRadio=(nm,val,hidden)=>{ if(!val)return; const el=document.querySelector(`input[name="${nm}"][value="${val}"]`); if(el){el.checked=true; $(hidden).value=val;} };
+  setRadio("occasion_r",d.occasion,"#occasion");
+  setRadio("size_r",d.size,"#size");
+  setRadio("flavor_r",d.flavor,"#flavor");
+  setRadio("fulfil_r",d.fulfil,"#fulfil");
+  (d.extras||[]).forEach(v=>{const el=document.querySelector(`input[name="extra_c"][value="${v}"]`); if(el)el.checked=true;});
+  ["date","theme","details","allergies","name","phone","email"].forEach(k=>{ if(d[k]) $("#"+k).value=d[k]; });
+}
+
+/* ---------------- Language ---------------- */
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k=el.getAttribute("data-i18n"); if(I18N[lang][k]!==undefined) el.textContent=I18N[lang][k];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+    const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]!==undefined) el.placeholder=I18N[lang][k];
+  });
+  // hero title has an emphasized word
+  $(".hero h1").innerHTML = t("hero_title") + `<em>${lang==="es"?"pastel soñado":"dream cake"}</em>`;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+  // preserve selections, re-render chips + gallery with translated labels
+  const snapshot = {
+    occasion:$("#occasion").value, size:$("#size").value, flavor:$("#flavor").value,
+    fulfil:$("#fulfil").value, extras:getExtras()
+  };
+  renderChips();
+  const reSet=(nm,val,hid)=>{ if(!val)return; const el=document.querySelector(`input[name="${nm}"][value="${val}"]`); if(el){el.checked=true; $(hid).value=val;} };
+  reSet("occasion_r",snapshot.occasion,"#occasion");
+  reSet("size_r",snapshot.size,"#size");
+  reSet("flavor_r",snapshot.flavor,"#flavor");
+  reSet("fulfil_r",snapshot.fulfil,"#fulfil");
+  snapshot.extras.forEach(v=>{const el=document.querySelector(`input[name="extra_c"][value="${v}"]`); if(el)el.checked=true;});
+  renderGallery();
+  update();
+}
+
+/* ---------------- Init ---------------- */
+function init(){
+  // date min = today
+  const today=new Date().toISOString().split("T")[0];
+  renderChips();
+  renderGallery();
+  loadDraft();
+  $("#date").min = today;
+  $("#yr").textContent = new Date().getFullYear();
+  $("#fbLink").href = CONFIG.facebook; $("#igLink").href = CONFIG.instagram;
+
+  document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{ lang=b.dataset.lang; applyLang(); }));
+  ["date","theme","details","allergies","name","phone","email"].forEach(id=>{
+    $("#"+id).addEventListener("input",()=>{ update(); clearError($("#"+id).closest(".field")); });
+  });
+  $("#sendWa").addEventListener("click",sendWhatsApp);
+  $("#sendEmail").addEventListener("click",sendEmail);
+  $("#copyBtn").addEventListener("click",copyOrder);
+  applyLang();
+  update();
+}
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
